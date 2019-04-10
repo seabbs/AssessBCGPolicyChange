@@ -2,29 +2,29 @@
 Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
 =================================================================================================================
 
-[![badge](https://img.shields.io/badge/Launch-Analysis-lightblue.svg)](https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio) [![Documentation](https://img.shields.io/badge/Documentation-click%20here!-lightgrey.svg?style=flat)](https://www.samabbott.co.uk/AssessBCGPolicyChange) [![Paper](https://img.shields.io/badge/Paper-10.1101/567511-lightgreen.svg)](https://doi.org/10.1101/567511) [![DOI](https://zenodo.org/badge/173767331.svg)](https://zenodo.org/badge/latestdoi/173767331)
+[![badge](https://img.shields.io/badge/Launch-Analysis-lightblue.svg)](https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio) [![Documentation](https://img.shields.io/badge/Documentation-click%20here!-lightgrey.svg?style=flat)](https://www.samabbott.co.uk/AssessBCGPolicyChange) [![Paper](https://img.shields.io/badge/Paper-10.1101/567511-lightgreen.svg)](https://doi.org/10.1101/567511) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2635687.svg)](https://doi.org/10.5281/zenodo.2635687)
 
 [Sam Abbott](https://www.samabbott.co.uk), Hannah Christensen, Ellen Brooks-Pollock
 
 Background
-==========
+----------
 
-In 2005, England and Wales ended the universal BCG vaccination program for secondary school children. This paper assesses some of the quantitative evidence that informed this policy change.
+In 2005, England and Wales switched from universal BCG vaccination for school-age children to targeted vaccination of neonates. We assessed some of the quantitative evidence that informed this policy change.
 
 Methods
-=======
+-------
 
-We recreated a previously published approach for estimating the impact of ending the BCG schools scheme in England and Wales, updating the model to include parameter uncertainty. We investigated multiple scenarios, including those considered by the Joint Committee on Vaccination and Immunisation, and also explored new approaches using notification data. We estimated the number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools scheme.
+We recreated a previous approach for estimating the impact of ending the BCG schools scheme in England and Wales, updating the model with parameter uncertainty. We investigated scenarios considered by the Joint Committee on Vaccination and Immunisation, and explored new approaches using notification data. We estimated the number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools’ scheme.
 
 Results
-=======
+-------
 
-We found that a 1.9% annual decrease in Tuberculosis incidence rates best matched our estimates made using notification data. We estimate that 1600 (95% Interquartile range (IQR) 1300 to 2100) vaccines would have been required to prevent a single notification in 2004 and that 302 (95% IQR 238 to 369) additional notifications would have occurred annually if the scheme had ended in 2001. This decreased to 120 (95% IQR 88 to 155) if the scheme ended in 2016.
+We found a 1.9% annual decrease in Tuberculosis incidence rates best matched our estimates from notifications. We estimate that 1600 (95% Interquartile range (IQR) 1300 to 2100) vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, 302 (95% IQR 238 to 369) additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, 120 (95% IQR 88 to 155) additional annual notifications would have occurred.
 
 Conclusions
-===========
+-----------
 
-We found that our estimates of the impact of ending the BCG schools scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools scheme was found to be greater than previously thought when parameter values were updated and notification data was used. Policy makers should consider our results when assessing the impact of ending a vaccination scheme.
+Our estimates of the impact of ending the BCG schools scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools scheme was found to be greater than previously thought when parameter values were updated and notifications were used. Our results highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
 
 Reproducibility
 ---------------

@@ -15,3 +15,6 @@ $(ANALYSIS_PLAN): analysis_plan.Rmd $(RESOURCES)
 
 $(PAPER): paper.Rmd $(RESOURCES)
 			R -e 'rmarkdown::render("paper.Rmd", c("html_document", "word_document"), output_dir = "drafts/paper", output_options = list())'
+
+
+
