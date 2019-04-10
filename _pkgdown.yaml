@@ -1,0 +1,23 @@
+title: Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
+url: https://samabbott.co.uk/AssessBCGPolicyChange
+template:
+  params:
+    bootswatch: lumen
+
+navbar:
+  type: inverse
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Analysis Plan"
+      href: articles/analysis_lan.html
+    - text: "Paper + SI"
+      href: articles/paper.html
+
+  right:
+    - icon: fa-file-code-o
+      text: "Functions"
+      href: reference/index.html
+    - icon: fa-github fa-lg
+      text: "Github"
+      href: https://github.com/seabbs/AssessBCGPolicyChange

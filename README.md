@@ -1,0 +1,97 @@
+
+Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
+=================================================================================================================
+
+[![badge](https://img.shields.io/badge/Launch-Analysis-lightblue.svg)](https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio) [![Documentation](https://img.shields.io/badge/Documentation-click%20here!-lightgrey.svg?style=flat)](https://www.samabbott.co.uk/AssessBCGPolicyChange) [![Paper](https://img.shields.io/badge/Paper-10.1101/567511-lightgreen.svg)](https://doi.org/10.1101/567511) [![DOI](https://zenodo.org/badge/173767331.svg)](https://zenodo.org/badge/latestdoi/173767331)
+
+[Sam Abbott](https://www.samabbott.co.uk), Hannah Christensen, Ellen Brooks-Pollock
+
+Background
+==========
+
+In 2005, England and Wales ended the universal BCG vaccination program for secondary school children. This paper assesses some of the quantitative evidence that informed this policy change.
+
+Methods
+=======
+
+We recreated a previously published approach for estimating the impact of ending the BCG schools scheme in England and Wales, updating the model to include parameter uncertainty. We investigated multiple scenarios, including those considered by the Joint Committee on Vaccination and Immunisation, and also explored new approaches using notification data. We estimated the number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools scheme.
+
+Results
+=======
+
+We found that a 1.9% annual decrease in Tuberculosis incidence rates best matched our estimates made using notification data. We estimate that 1600 (95% Interquartile range (IQR) 1300 to 2100) vaccines would have been required to prevent a single notification in 2004 and that 302 (95% IQR 238 to 369) additional notifications would have occurred annually if the scheme had ended in 2001. This decreased to 120 (95% IQR 88 to 155) if the scheme ended in 2016.
+
+Conclusions
+===========
+
+We found that our estimates of the impact of ending the BCG schools scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools scheme was found to be greater than previously thought when parameter values were updated and notification data was used. Policy makers should consider our results when assessing the impact of ending a vaccination scheme.
+
+Reproducibility
+---------------
+
+### Repository structure
+
+The repository is structured as an R package. It has the following structure:
+
+-   `data-raw`: Raw data processing.
+-   `data`: Processed data.
+-   `R`: Supporting R functions.
+-   `docs:` Documentation for R code.
+-   `vignettes`: Analysis paper, results, and analysis plan.
+-   `peer-review`: Documentation required for peer review.
+
+### Manual install
+
+-   Install R (analysis run with `3.5.2`) and Rstudio (alternatively use Docker as outlined below).
+
+-   Download the analysis folder from <https://github.com/seabbs/AssessBCGPolicyChange/archive/master.zip> or use `git clone`, as follows, in the command line (not the R terminal).
+
+``` bash
+git clone https://github.com/seabbs/AssessBCGPolicyChange.git
+```
+
+-   Once this has been downloaded click on the project file (`AssessBCGPolicyChange.Rproj`).
+
+-   Install the analysis dependencies and build the package using the following. To enable more robust reproducibility consider using the [`checkpoint`](https://cran.r-project.org/web/packages/checkpoint/index.html) package versioned locked to R `3.5.2`.
+
+``` r
+#install.packages("devtools")
+# To build locally
+devtools::install_dev_deps(dependencies = TRUE)
+devtools::install()
+# Alternatively to remote install
+devtools::install_github("seabbs/AssessBCGPolicyChange", dependencies = TRUE)
+```
+
+-   Load the analysis results by running `vignettes/paper.Rmd`. Alternatively the complete analysis (along with documentation) can be reconstructed using `make` in the project root directory.
+
+-   See `data-raw` for data processing and the documentation for implementation details.
+
+### Docker
+
+This analysis was developed in a docker container based on the tidyverse docker image. To run the docker image run:
+
+``` bash
+docker run -d -p 8787:8787 --name assessbcgpolicychange -e USER=assessbcgpolicychange -e PASSWORD=assessbcgpolicychange seabbs/assessbcgpolicychange
+```
+
+The rstudio client can be found on port :8787 at your local machines ip. The default username:password is assessbcgpolicychange:assessbcgpolicychange, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.
+
+If you have access to the required underlying raw data (see [`tbinenglanddataclean`](https://www.samabbott.co.uk/tbinenglanddataclean/)) then the entire analysis can be reproduced from scratch by adding the following to the `docker run` command, with the data saved into `data/tb_data`. The data requirements, and structure, can be found [here](https://www.samabbott.co.uk/tbinenglanddataclean/).
+
+``` bash
+--mount type=bind,source=$(pwd)/data/tb_data,target=/home/DirectEffBCGPolicyChange/data/tb_data
+```
+
+Alternatively the analysis environment can be accessed via [binder](https://mybinder.org/v2/gh/seabbs/DirectEffBCGPolicyChange/master?urlpath=rstudio).
+
+Docker
+======
+
+This packge was developed in a docker container based on the tidyverse docker image. To run the docker image run:
+
+``` bash
+docker run -d -p 8787:8787 --name assessbcgpolicychange -e USER=seabbs -e PASSWORD=seabbs seabbs/assessbcgpolicychange
+```
+
+The rstudio client can be found on port :8787 at your local machines ip. The default username:password is seabbs:seabbs, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.

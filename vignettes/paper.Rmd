@@ -1,0 +1,765 @@
+---
+title: "Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales"
+author: "Sam Abbott, Hannah Christensen, Ellen Brooks-Pollock"
+output: 
+      word_document:
+        reference_docx: resources/style.docx
+      html_document:
+vignette: >
+  %\VignetteIndexEntry{Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+bibliography: resources/library.bib  
+csl: resources/bmj.csl
+---
+
+
+```{r setup, include=FALSE}
+samples <- 10000
+cohorts_to_sim <- 12
+rerun <- FALSE
+prefix <- "paper"
+
+if (!dir.exists("results")) {
+  dir.create("results")
+}
+
+if (!dir.exists(file.path("results", prefix)) | rerun) {
+  if (rerun) {
+    unlink(file.path("results", prefix), recursive = TRUE)
+  }
+  dir.create(file.path("results", prefix))
+}
+
+results_path <- file.path("results", prefix)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, fig.path = paste0("figure/",prefix,"/"),
+  cache.path = paste0("cache/",prefix,"/"),
+  fig.width = 8, 
+  fig.height = 6
+  )
+```
+
+
+```{r packages, include = FALSE}
+library(tidyverse)
+library(purrr)
+library(scales)
+library(prettypublisher)
+library(AssessBCGPolicyChange)
+
+## Saving formatted results
+save_formated <- function(df, name) {
+  path <- file.path("results", "paper", paste0(name, ".rds"))
+  
+  saveRDS(df, path)
+}
+```
+
+**Authors:**
+
+Sam Abbott, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+Hannah Christensen, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+Nicky Welton, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol, UK
+
+**Correspondence to:** Sam Abbott, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol BS8 2BN, UK; sam.abbott@bristol.ac.uk; 01173310185
+
+**Words:** *Title:* 15 *Abstract:* 260 *Paper:* 2980
+
+# What is already known on this subject
+
+- Little work has been done to assess the impact of the change in BCG vaccination policy in England and Wales.
+
+- Ending universal BCG school-age vaccination is estimated to result in a small increase in TB notifications. However, this estimate may not be reliable.
+
+- The World Health Organization recommends vaccination for all neonates as early as possible after birth in high burden settings, with targeted vaccination of high risk neonates being recommended in low burden settings. This is based on the variable effectiveness of the Bacillus Calmette Guerin vaccine.
+
+- The Bacillus Calmette Guerin vaccine has been shown to be highly effective in white UK born individuals. This may mean that school-age vaccine maybe more beneficial in this population than in other settings.
+
+
+# What this study adds
+
+- Using notification data the estimates of the impact of ending the BCG schools' scheme were greater than previously thought. 
+
+- The inclusion of parameter uncertainty, and measurement error, allowed the uncertainty in the final estimates to be presented. Previously published estimates may have been spuriously precise.
+
+- Further studies are needed that: include the impact of targeted neonatal vaccination; make full use of the available surveillance data; and capture long term, indirect, effects.
+
+# Introduction
+
+Whilst Tuberculosis (TB) incidence rates are low in England and Wales compared to many other parts of the world, they remain high for a developed nation. They have also remained stable for the previous two decades, despite declines in global incidence rates and a renewed focus on TB control. The Bacillus Calmette–Guérin (BCG) vaccine remains the only licensed vaccine for use against TB, although its use globally is controversial due to evidence of variable effectiveness,[@Mangtani2014a] and waning protection 10-15 years after vaccination.[@Abubakar2013] Global usage of the BCG varies between no vaccination, universal vaccination, and high-risk group vaccination and may target either neonates or school-aged children.[@Zwerling2011a] In 2005, England and Wales changed from a policy of universal vaccination of those at school-age to targeted vaccination of neonates. Due to the complex nature of both TB and the BCG vaccine, the ongoing impact of this change in policy is hard to directly estimate, with decision makers relying on expert opinion, evidence from surveillance data, and insight from modelling studies.  
+
+The World Health Organization (WHO) recommends vaccination for all neonates as early as possible after birth in high burden settings, with vaccination in low burden settings being dependent on the country specific epidemiology of TB.[@WHO2017] This recommendation is based on the strong evidence that the BCG is highly protective in children,[@Rodrigues1993; @Colditz1994] whilst its effectiveness has been shown to vary with latitude when given later in life.[@Mangtani2014] In England and Wales, universal school-aged vaccination was introduced after a MRC trial in the 1950s estimated BCG's effectiveness at 80% in the white UK born population.[@Hart1972] The 2005 change in BCG vaccination policy was motivated by evidence of decreased transmission of TB, an increasing proportion of TB cases occurring in the non-UK born,[@PHE2017] and modelling evidence that suggested stopping the BCG schools' scheme would have minimal long term effects on incidence rates.[@Sutherland1989]
+
+In 1987, an assessment of the school-age vaccination program was carried out in England and Wales.[@Sutherland1989] This study was used, combined with a sensitivity analysis of notification rates, as supporting evidence by the Joint Committee on Vaccination and Immunisation (JVCI) BCG subgroup for the change in vaccination policy.[@JVCIBCG2002; @JVCIBCG2003] This papers aims to re-evaluate this modelling, and re-estimate the predicted impact of stopping the schools' scheme. Whilst these results are retrospective they may be used by policy makers to assess some of the ongoing impact of ending the BCG schools' scheme. In addition they highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
+
+# Methods
+
+## Modelling the impact ending the BCG schools' scheme
+
+We implemented Sutherland et al.’s model for estimating the impact of ending the BCG schools' scheme.[@Sutherland1989] This model was based on data from TB notification surveys conducted in 1973, 1978, and 1983.[@Sutherland1987a] These were used to estimate incidence rates, stratified by BCG vaccination status, in the white population of England and Wales aged 15-19 years old, 20-24 years old and 25-29 years old. Future incidence rates were forecast by assuming an annual decrease in incidence rates, which was based on historic trends (see supplmentary information).[@Sutherland1989; @Springett1988] Primary impacts from ending the schools' scheme were estimated by calculating the difference in incidence rates between the vaccinated and unvaccinated populatons. Additional notifications from TB transmission were then calculated using a transmission chain model. This model was defined using the following steps, 
+
+1. Estimate the total expected number of secondary notifications ($T$) arising from any single primary notification using the following, 
+
+$$ T = R_0^z = (1-d)^z < 1 $$
+Where $R_0$ is the expected number of secondary cases produced by a single infection in a completely susceptible population, $d$ is the percentage decay in notification rates, and $z$ is the average interval between the notification of any individual and the notification of the patient who infected them.
+
+2. Relate $T$ to the number of notifications in each generation using the initial generation size ($x$) with the following power series,
+
+$$ T=x+x^2+x^3+ . . = \frac{x}{1-x} $$
+3. Estimate the expected average interval between each primary notification and all secondary notifications ($Z$). This is defined to be the sum of time to all notifications, weighted by the fraction in each generation, divided by the sum of all notifications. Mathematically this is, 
+
+$$ Z = \frac{xz + x^{2}2z + x^{3}3z + . .}{x+x^2+x^3+ . . }= \frac{z}{1-x} $$
+
+Implementing the model required several assumptions not detailed in [@Sutherland1989]. Firstly, as incidence rates rates for those ineligible for the BCG schools' scheme are not published, we assumed that they were equal to those in the unvaccinated population. In addition, in order to reproduce the distribution of cases due to transmission over time we introduced an additional parameter; the percentage of secondary cases due to a primary case in the first year after activation ($f$). The distribution of secondary cases ($N$) was then modelled as follows,
+
+$$ N^{Current} = P T  f  x $$
+$$ N^{Projected} = ( PT - N^{Current})d^{5-Z} $$ 
+$$ N_i^{Total} = N^{Current}_i + N^{Projected}_{i-1} $$
+
+where $P$ is the number of primary notifications, and $i$ is the year of interest. We fitted this parameter using least squares to the original estimates of the total notifications due to ending the scheme under several scenarios, for several years. We validated our fitted model by comparing our results with those from the original implementation.
+
+```{r generate-sutherland-scenarios}
+## Generate percentage annual change scenarios based on those used at JVCI - see ?gen_annual_change_scenarios for details
+sutherland_scenarios <- pomp::bake(file = file.path("results", prefix, "sutherland_scenarios.rda"), {
+  gen_annual_change_scenarios(TB_decrease = c(0.09, 0.039, 0.019, 0),
+  cohorts_to_sim = cohorts_to_sim, samples = samples)
+})
+```
+
+```{r original-sutherland-scenario}
+## Make a single scenario using the original sutherland parameters
+orig_sutherland_scenario <- sutherland_scenarios %>% 
+  slice(1) %>% 
+  mutate(scenario = paste0(scenario, " (original parameters)"))
+
+orig_parameter_est <- sample_model_parameters(incidence_rates = sutherland_incidence_rates,
+  population_data = sutherland_data, samples = 1, as_sutherland = TRUE)
+```
+
+## Updating model parameter estimates
+
+Incidence rates were included as point estimates in [@Sutherland1989]; in our updated model we included uncertainty in these rates. We estimated notifications for 1973, 1978, and 1983, using published incidence rates and population estimates. Samples were then generated using a Poisson distribution.[@Sutherland1989; @Sutherland1987a] These samples were then used to estimate a distribution of incidence rates. Sutherland et al. assumed a serial interval of 2 years between linked infections. We updated this assumption using an estimate from a recent study in the Netherlands of 1.44 (95% CI 1.29 to 1.63) years.[@Borgdorff2011]
+
+```{r sample parameter space}
+## Generate parameter samples - see ?sample_model_parameters for details
+parameter_samples <- pomp::bake(file = file.path("results", prefix, "parameter_samples.rda"), {
+  sample_model_parameters(incidence_rates = sutherland_incidence_rates,
+  population_data = sutherland_data, samples = samples)
+})
+```
+
+We considered the original assumption of a 9% annual decrease in incidence rates as well as 3 scenarios based on those considered by the JVCI BCG subgroup;[@JVCIBCG2002; @JVCIBCG2003] these were a 3.9% decrease, a 1.9% decrease, and no change annual in incidence rates. We also estimated the annual decrease in incidence rates in the white UK born using two proxy measures. The first proxy measure was the annual change in notifications in England and Wales, which was estimated using data from Public Health England (PHE). The standard deviation (SD) of this measure was then calculated using the `prop.test` function in R.[@R] The second proxy used was the annual decrease in the UK born age-specific incidence rates in the English population. These were calculated using notification data from the Enhanced Tuberculosis surveillance system (ETS) and the June Labour Force Survey.[@PHE2017] Incidence rates (with SDs) were estimated using the epiR package.[@EpiR]. Uncertainty was incorperated by sampling from a normal distribution for both proxy measures. Data collection for the ETS began in 2000, we therefore estimated incidence rates between 1984 and 1999, and for the years between notifications surveys (1974-1977 and 1979-1892), using local regression for each sample fitted to the incidence rates published in [@Sutherland1989], and our estimated incidence rates from 2000 on-wards. For years prior to 1973 the annual decreases were assumed to be the mean of the previous 3 years of data. For both proxy measures the annual decreases in incidence rates post 2016 were assumed to be the average of the estimates in 2013, 2014, and 2015. 
+
+```{r generate-notification-scenarios}
+## Generate senarios based on annual decrease in notifications
+## see ?sample_annual_decrease_nots for details
+## data based on historic TB notifications, see ?nots_ew
+## For 2017 onwards percentage change is assumed to be 3 year average from 2013:2016
+nots_scenarios <- pomp::bake(file = file.path("results", prefix, "nots_scenarios.rda"), {
+  sample_annual_decrease_nots(notifications = nots_ew, samples = samples, 
+                                              max_year = 1969 + (cohorts_to_sim * 5 - 1),
+                                              years_to_avg = 3) %>% 
+  mutate(scenario = "Notifications") %>% 
+  select(scenario, everything())
+})
+```
+
+```{r generate-inc-rate-scenarios}
+## Generate senarios based on annual decrease in incidence rates
+## see ?sample_annual_decrease_inc_rates for details
+## data based on Sutherland et al estimates of White UK born incidence rates, see ?nots_ew
+## and estimates of UK born incidence rates in England calculated using the Labour Force Survey and
+## the Enhanced Tuberculosis system.
+## For 2015 onwards percentage change is assumed to be 3 year average from 2013:2016
+inc_rates_scenarios <- pomp::bake(file = file.path("results", prefix, "inc_rates_scenarios.rda"),{
+  
+  inc_rates_scenarios <- sample_annual_decrease_inc_rates(samples = samples, 
+                                                   max_year = 1969 + (cohorts_to_sim * 5 - 1),
+                                                   min_year = 1969,
+                                                   years_to_avg = 3, cores = parallel::detectCores(),
+                                                   verbose = TRUE) %>% 
+  mutate(scenario = "Incidence Rates") %>% 
+  select(scenario, everything())
+})
+```
+
+## Statistical analysis
+
+For each scenario, we ran the model until 2028 with 10,000 parameter samples. We tested the difference between scenarios using the Mann-Whitney test for both the number of vaccines needed to prevent a single case in 15 years after vaccination for a cohort aged 13-14 years old at vaccination and the total number of additional notifications caused by ending the BCG schools' scheme. As in [@Sutherland1989] a 15 year time horizon was used with 5 year intervals. The year closest to the year of the change in vaccination policy (2005), which had model estimates, was used as the baseline. 
+
+```{r simulate-model}
+## Bind all scenarios together
+scenarios <- sutherland_scenarios %>% 
+  bind_rows(nots_scenarios %>% 
+              select(scenario, sample, per_decrease_mat) %>% 
+              rename(annual_TB_decrease = per_decrease_mat)
+  ) %>% 
+  bind_rows(inc_rates_scenarios %>% 
+              select(scenario, sample, annual_TB_decrease = per_decrease_mat))
+## For each scenario and parameter sample simulate model - see ?gen_scenario_results for details
+scenario_results <- pomp::bake(file = file.path("results", prefix, "scenario_results.rda"),{
+  
+  original_results <- gen_scenario_results(orig_sutherland_scenario, orig_parameter_est, cores = 1)
+  scenario_results <- gen_scenario_results(scenarios, 
+                                         parameter_samples, 
+                                         cores = parallel::detectCores())
+  
+  scenario_results <- original_results %>% 
+    bind_rows(scenario_results)
+})
+
+## Order scenarios as a factor for plotting
+scenario_results <- scenario_results %>% 
+  mutate(scenario = scenario %>% 
+           factor(levels = rev(c("9% decrease (original parameters)", "9% decrease",
+                             "3.9% decrease", "1.9% decrease", "0% decrease", "Notifications", 
+                             "Incidence Rates"))))
+```
+
+# Results
+
+## Model validation
+
+```{r model-valid}
+pomp::stew(file = file.path("results", prefix, "model-valid.rda"), {
+
+make_suth_df <- function(df = NULL) {
+  tibble(`Year of Ending Scheme` = rownames(df)) %>% 
+  bind_cols(df %>%
+              as_tibble)
+}
+  
+## Original results
+sutherland_results_df <- sutherland_results
+colnames(sutherland_results_df) <- paste0(colnames(sutherland_results_df), "_orig")
+sutherland_results_df  <- sutherland_results_df %>% 
+  make_suth_df
+
+## Recreated model results
+recreated_results <- sutherland_model(Percentage.Year.One = 0.764)$`Table 5 - Total Effects of ending the schools BCG scheme`[4:6, -1]
+colnames(recreated_results) <- paste0(colnames(recreated_results), "_rec")
+
+## Difference between results
+diff_orig_update <- recreated_results - sutherland_results
+colnames(diff_orig_update) <- paste0(colnames(diff_orig_update), "_vdiff")
+
+## Percentage difference between results
+per_dif_update <- diff_orig_update / sutherland_results
+
+## Summary measures
+max_per_diff <- max(abs(per_dif_update)) * 100
+
+pretty_max <- pretty_round(max_per_diff, digits = 2) %>% 
+  paste0("%")
+
+median_per_diff <-  median(abs(per_dif_update)) * 100
+
+lll_per_diff <-  quantile(abs(per_dif_update), 0.025) * 100
+
+hhh_per_diff <-  quantile(abs(per_dif_update), 0.975) * 100
+
+median_lll_hhh_error <- pretty_ci(median_per_diff, lll_per_diff, hhh_per_diff, 
+                                  inline = TRUE, percentage = TRUE, note = "95% IQR ")
+## Make dataframes
+diff_orig_update <- diff_orig_update %>% 
+  make_suth_df
+
+recreated_results <- recreated_results %>% 
+  make_suth_df
+
+## Combined table
+comparision_tab <- recreated_results %>% 
+  left_join(sutherland_results_df, by = "Year of Ending Scheme") %>% 
+  left_join(diff_orig_update, by = "Year of Ending Scheme")
+
+comparision_tab <- comparision_tab[, order(colnames(comparision_tab))] %>% 
+  select(`Year of Ending Scheme`, everything())
+
+})
+```
+
+Our model produced results that were comparable with those from [@Sutherland1989] (`r pretty_suptabref("model_validation", inline = TRUE)`). When estimating the total notifications from ending the BCG schools' scheme at different times in white adults aged 15-29 years old in England and Wales our model had a median absolute error of `r median_lll_hhh_error` and a maximum absolute error of `r {pretty_max}`.
+
+## Annual change in TB incidence rates
+
+```{r get-per-change}
+per_annual_change <- pomp::bake(file = file.path("results", prefix, "per_annual_change.rda"),{
+  per_annual_change <- scenario_results %>%
+  select(scenario, sample, annual_TB_decrease) %>% 
+  mutate(years = map(annual_TB_decrease, ~data.frame(year = rownames(.)))) %>% 
+  mutate(annual_TB_decrease = map(annual_TB_decrease, ~as_tibble(.))) %>% 
+  unnest %>% 
+  rowwise %>% 
+  mutate(`15-19 years` =  coalesce(`15-19 years`, V1)) %>% 
+  mutate(`20-24 years` =  coalesce(`20-24 years`, V2)) %>% 
+  mutate(`25-29 years` =  coalesce(`25-29 years`, V3)) %>% 
+  select(-V1, -V2, -V3) %>% 
+  mutate(year = year %>% 
+           as.character %>% 
+           as.numeric) %>% 
+  gather(key = "age_group", value = "Annual Percentage Decrease", `15-19 years`, `20-24 years`, `25-29 years`) %>% 
+  mutate(age_group = factor(age_group, levels = c("15-19 years", "20-24 years", "25-29 years"))) %>% 
+  rename(Scenario = scenario, Year = year)
+})
+```
+
+```{r avg-annual-change}
+## Overall average change
+per_annual_change_avg <- per_annual_change %>% 
+  group_by(Scenario, age_group) %>% 
+  summarise(median = median(`Annual Percentage Decrease`),
+            lll = quantile(`Annual Percentage Decrease`, 0.025),
+            hhh = quantile(`Annual Percentage Decrease`, 0.975)) %>% 
+  mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
+  mutate(pa_change =  pretty_ci(median, lll, hhh, 
+                                  inline = TRUE, percentage = TRUE, note = "95% IQR ")) %>% 
+  mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(paste0(pretty_round(., digits = 2), "%")))
+
+
+pomp::stew(file = file.path("results", prefix, "avg-not.rda"), {
+avg_not <- per_annual_change_avg %>% 
+  filter(Scenario %in% "Notifications", age_group %in% "15-19 years") %>% 
+  pull(pa_change)
+})
+
+pomp::stew(file = file.path("results", prefix, "avg-inc.rda"), {
+avg_inc <- per_annual_change_avg %>% 
+  filter(Scenario %in% "Incidence Rates") %>% 
+  pull(pa_change)
+})
+
+
+## Year average change
+per_annual_change_yr_avg  <- per_annual_change %>% 
+  mutate(Scenario = factor(Scenario, 
+                           levels = per_annual_change$Scenario %>% 
+                             levels %>% 
+                             rev)) %>% 
+  group_by(Scenario, Year, age_group) %>%
+  filter(!(Scenario %in% "9% decrease (original parameters)"), Year <= 2016) %>% 
+  summarise(median = median(`Annual Percentage Decrease`),
+            lll = quantile(`Annual Percentage Decrease`, 0.025),
+            hhh = quantile(`Annual Percentage Decrease`, 0.975)) %>% 
+  rename(`Annual Percentage Decrease` = median)
+
+min_per_annual_change_yr_avg <- per_annual_change_yr_avg %>% 
+  group_by(Scenario, age_group) %>% 
+  filter(`Annual Percentage Decrease` == min(`Annual Percentage Decrease`)) %>% 
+  slice(1) %>% 
+  ungroup %>% 
+  mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
+  mutate(pa_change =  pretty_ci(`Annual Percentage Decrease`, lll, hhh, 
+                                inline = TRUE, percentage = TRUE, note = "95% IQR ")) %>% 
+  mutate(Year = Year / 100)
+  
+pomp::stew(file = file.path("results", prefix, "min-not.rda"), {
+min_not <- min_per_annual_change_yr_avg %>% 
+  filter(Scenario %in% "Notifications", age_group %in% "15-19 years") 
+})
+
+max_per_annual_change_yr_avg <- per_annual_change_yr_avg %>% 
+  group_by(Scenario, age_group) %>% 
+  filter(`Annual Percentage Decrease` == max(`Annual Percentage Decrease`)) %>% 
+  slice(1) %>% 
+  mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
+  mutate(pa_change =  pretty_ci(`Annual Percentage Decrease`, lll, hhh, 
+                                inline = TRUE, percentage = TRUE, note = "95% IQR ")) %>% 
+    mutate(Year = Year / 100)
+  
+pomp::stew(file = file.path("results", prefix, "max-not.rda"), {
+  max_not <- max_per_annual_change_yr_avg %>% 
+  filter(Scenario %in% "Notifications", age_group %in% "15-19 years")
+})
+```
+
+We found that the assumption of a 9% annual decrease in incidence rates in the white UK born was not comparable to our estimates using either notification data or age-specific incidence rates in the time period studied (`r pretty_supfigref("annual_tb_decrease_plot", inline = TRUE)`). The median annual decrease estimated using notifications was `r avg_not`, with a maximum of `r max_not$pa_change` in `r max_not$Year` and a minimum of `r min_not$pa_change` in `r min_not$Year`. Using age-specific incidence rates we estimated the median annual decrease in incidence rates for 15-19 year olds was `r avg_inc[1]`, `r avg_inc[2]` for 20-24 year olds, and `r avg_inc[3]` for 25-29 year olds. There was substantial variation between years and a high degree of uncertainty.
+
+## Vaccines required to prevent a single notification
+
+```{r extract vaccines required to prevent and tidy}
+vaccines_to_prevent <- pomp::bake(file = file.path("results", prefix, "vaccines_to_prevent.rda"),{
+  # use multiple cores if available
+vaccines_to_prevent <- scenario_results %>%
+  select(scenario, sample, `Table 3 - Estimated of no. of TB notifications prevented`) %>% 
+  rename(tb_nots_prevented_df = `Table 3 - Estimated of no. of TB notifications prevented`) %>% 
+  mutate(tb_nots_prevented_df = tb_nots_prevented_df %>% 
+           map(as_tibble)) %>% 
+  unnest() %>% 
+  rename(year_vac = `Vac at age 13`) %>% 
+  rename(not_prev_15_yrs = `Notifications prevented in 15 years`) %>% 
+  rename(vacs_prevent_case_15_yrs = `Vacs to prevent one notification in 15 years`)
+})
+
+vaccines_to_prevent <- vaccines_to_prevent %>% 
+  select(-not_prev_15_yrs)
+```
+
+```{r mann-whitney}
+add_mann_whitney_test <- function(df = NULL, metric = NULL, group = NULL, baseline = NULL) {
+  
+  baseline <- enquo(baseline)
+  
+  df_tested <- df %>% 
+  group_by(.dots = group) %>% 
+  spread(key = "scenario", value = metric) %>% 
+  summarise_at(.vars = unique(as.character(df$scenario)), .funs = funs(wilcox.test(x = !!baseline, y = .)$p.value)) %>% 
+  gather(key = "scenario", p_value, -group) %>% 
+  mutate(pretty_p = pretty_round(p_value, digits = 3)) %>% 
+  mutate(pretty_p = ifelse(pretty_p %in% "0.000", "<0.001", pretty_p))
+
+return(df_tested)
+}
+
+pomp::stew(file = file.path("results", prefix, "mann-whitney.rda"), {
+  vac_prevent_mw_1 <- vaccines_to_prevent %>% 
+  add_mann_whitney_test(metric = "vacs_prevent_case_15_yrs", group = "year_vac", baseline = `1.9% decrease`)
+
+p_not_vs_1_2004 <- vac_prevent_mw_1 %>% 
+  filter(scenario %in% "Notifications", year_vac == 2004) %>% 
+  pull(pretty_p)
+
+p_inc_vs_1_2004 <- vac_prevent_mw_1 %>% 
+  filter(scenario %in% "Incidence Rates", year_vac == 2004) %>% 
+  pull(pretty_p)
+
+vac_prevent_mw_9 <- vaccines_to_prevent %>% 
+  add_mann_whitney_test(metric = "vacs_prevent_case_15_yrs", group = "year_vac", baseline = `9% decrease`)
+})
+```
+
+```{r table-vac-prev}
+make_results_table <- function(df = NULL, group = NULL, metric = NULL) {
+  metric <- enquo(metric)
+  
+  df_tab <- df %>% 
+  group_by(.dots = group) %>%
+  summarise(median = median(!!metric), 
+            lll = quantile(!!metric, 0.025),
+            hhh = quantile(!!metric, 0.975)) %>% 
+  mutate(sum = pretty_ci(median, lll, hhh, digits = 0)) %>%
+  mutate(sum_inline = pretty_inline_ci(sum, note = "95% IQR ")) %>%
+  rowwise() %>% 
+  mutate_at(.vars = c("sum", "sum_inline"),
+            .funs = funs(ifelse(median == lll && median == hhh, 
+                                pretty_round(median, digits = 0), .))) %>% 
+  ungroup
+
+ return(df_tab) 
+}
+
+
+pomp::stew(file = file.path("results", prefix, "table-vac-prev.rda"), {
+  
+vac_prevent_tab <- vaccines_to_prevent %>% 
+  make_results_table(group = c("scenario", "year_vac"), 
+                     metric = vacs_prevent_case_15_yrs) 
+
+
+  ## 2004 summary measures
+vac_prevent_tab_2004 <- vac_prevent_tab %>% 
+  filter(year_vac %in% 2004)
+
+vac_2004_9 <- vac_prevent_tab_2004 %>% 
+  filter(scenario %in% "9% decrease") %>% 
+  pull(sum_inline)
+
+
+vac_2004_1 <- vac_prevent_tab_2004 %>% 
+  filter(scenario %in% "1.9% decrease") %>% 
+  pull(sum_inline)
+
+vac_2004_nots <- vac_prevent_tab_2004 %>% 
+  filter(scenario %in% "Notifications") %>% 
+  pull(sum_inline)
+
+vac_2004_inc <- vac_prevent_tab_2004 %>% 
+  filter(scenario %in% "Incidence Rates") %>% 
+  pull(sum_inline)
+
+## 1.9% decrease summary measures
+vac_prevent_1 <- vac_prevent_tab %>% 
+  filter(scenario %in% "1.9% decrease") %>% 
+  filter(year_vac > 2000)
+
+vac_prevent_1_2009 <- vac_prevent_1 %>% 
+  filter(year_vac == 2009) %>% 
+  pull(sum_inline)
+  
+vac_prevent_1_2014 <- vac_prevent_1 %>% 
+  filter(year_vac == 2014) %>% 
+  pull(sum_inline)  
+
+vac_prevent_1_2019 <- vac_prevent_1 %>% 
+  filter(year_vac == 2019) %>% 
+  pull(sum_inline)  
+  
+})
+```
+
+We found that updating parameter values, and incorporating uncertainty, did not alter the number of vaccines required to prevent a single notification within 15 years in a cohort vaccinated at school-age, when the annual decrease in TB incidence rates was assumed to be 9% (`r pretty_suptabref("vac_prevent_tab", inline = TRUE)`). However, the updated estimate had a large interquartile range (`r vac_2004_9` vaccines required in 2004). As the annual decrease in incidence rates was reduced the number of vaccines required to prevent a single notification decreased; an estimated `r vac_2004_1` vaccines were required to prevent a case in 2004 when the annual decrease was assumed to be 1.9%. Estimates of the number of vaccines required to prevent a notification were comparable but not equivalent when the annual decrease was estimated using notifications (`r vac_2004_nots`, P: `r p_not_vs_1_2004`) and age-specific incidence rates (`r vac_2004_inc`, P: `r p_inc_vs_1_2004`). The estimate using incidence rates had a high degree of uncertainty (`r pretty_figref("boxplot_vac_prev", inline = TRUE)`). The number of vaccines required increased slightly over time with `r vac_prevent_1_2009` required in 2009, `r vac_prevent_1_2014` required in 2014, and `r vac_prevent_1_2019` required in 2019 when an annual decrease of 1.9% in incidence rates was assumed.
+
+```{r graph-vacs-to-prev, fig.cap = pretty_figref("boxplot_vac_prev", "Vaccines required in a cohort of those vaccinated at school-age to prevent a single case of Tuberculosis within 15 years of vaccination in 2004, 2009, 2014, or 2019. The years presented were dictated by the 5 year timestep of the model. The percentage annual decrease scenarios considered were based on those considered by the JVCI BCG subgroup, with the addition of a scenario using aggregate notification data and a scenario using estimates of age-specific incidence rates in the UK born. Each boxplot summarises the output of 10,000 model simulations for each scenario. Outliers have been ommitted for clarity."), dpi = 330}
+vaccines_to_prevent %>% 
+  rename(Scenario = scenario) %>% 
+  filter(year_vac > 2000 & year_vac < 2020, !(Scenario %in% "9% decrease (original parameters)")) %>% 
+  ggplot(aes(x = Scenario, y = vacs_prevent_case_15_yrs, col = Scenario)) +
+    geom_boxplot(outlier.shape = NA, width = .6, position = "dodge") +
+  coord_flip() +
+  labs(y = "Vaccines required (log scale)") +
+  scale_colour_viridis_d(end = 0.9, direction = -1) +
+  scale_y_log10(breaks = c(250, 500, 1000, 2000, 4000, 10000, 25000, 70000),
+                labels = comma,
+                limits = c(200, 80000)) +
+  theme_minimal() +
+  facet_wrap(~year_vac) + 
+  theme(legend.position = "none")
+```
+ 
+### Average annual additional cases from ending the BCG schools' scheme at various dates
+
+```{r extract total additional notifications and tidy}
+avg_annual_not_prev <- pomp::bake(file = file.path("results", prefix, "total_not_prev.rda"),{
+avg_annual_not_prev <- scenario_results %>% 
+  select(scenario, sample, `Total additional notifications all time`) %>% 
+  mutate(tb_nots_prevented_df = `Total additional notifications all time` %>% 
+           map(~tibble(years = names(.), add_nots = .))
+         ) %>% 
+  unnest() %>% 
+  mutate(annual_add_nots = add_nots / ((1969 + 5 * cohorts_to_sim -1 ) - as.numeric(years)))
+})
+
+avg_annual_not_prev <- avg_annual_not_prev %>% 
+  select(scenario, sample, annual_add_nots, years)
+```
+
+```{r annual_nots-mw}
+pomp::stew(file = file.path("results", prefix, "annual_nots-mw.rda"), {
+  avg_annual_not_prev_mw_1 <- avg_annual_not_prev %>% 
+  filter(!(years %in% "2026")) %>% 
+  add_mann_whitney_test(metric = "annual_add_nots", group = "years", baseline = `1.9% decrease`)
+
+a_not_vs_1_2001 <- avg_annual_not_prev_mw_1 %>% 
+  filter(scenario %in% "Notifications", years %in% "2001") %>% 
+  pull(pretty_p)
+
+a_inc_vs_1_2001 <- avg_annual_not_prev_mw_1 %>% 
+  filter(scenario %in% "Incidence Rates", years %in% "2001") %>% 
+  pull(pretty_p)
+
+avg_annual_not_prev_mw_9 <- avg_annual_not_prev %>% 
+  filter(!(years %in% "2026")) %>%
+  add_mann_whitney_test(metric = "annual_add_nots", group = "years", baseline = `9% decrease`)
+})
+```
+
+```{r annual_nots_tab}
+pomp::stew(file = file.path("results", prefix, "annual_nots_tab.rda"), {
+  avg_annual_not_tab <- avg_annual_not_prev %>% 
+  make_results_table(group = c("scenario", "years"), metric = annual_add_nots)
+
+
+## 2006 summary measures
+avg_annual_tab_2001 <- avg_annual_not_tab %>% 
+  filter(years %in% "2001")
+
+avg_annual_2001_9 <-avg_annual_tab_2001 %>% 
+  filter(scenario %in% "9% decrease") %>% 
+  pull(sum_inline)
+
+
+avg_annual_2001_1 <- avg_annual_tab_2001 %>% 
+  filter(scenario %in% "1.9% decrease") %>% 
+  pull(sum_inline)
+
+avg_annual_2001_nots <- avg_annual_tab_2001 %>% 
+  filter(scenario %in% "Notifications") %>% 
+  pull(sum_inline)
+
+avg_annual_2001_inc <- avg_annual_tab_2001 %>% 
+  filter(scenario %in% "Incidence Rates") %>% 
+  pull(sum_inline)
+
+## 1.9% decrease summary measures
+avg_annual_1 <- avg_annual_not_tab %>% 
+  filter(scenario %in% "1.9% decrease") 
+
+avg_annual_1_2006 <- avg_annual_1 %>% 
+  filter(years %in% "2006") %>% 
+  pull(sum_inline)
+  
+avg_annual_1_2011 <- avg_annual_1  %>% 
+  filter(years %in% "2011") %>% 
+  pull(sum_inline)  
+
+avg_annual_1_2016 <- avg_annual_1  %>% 
+  filter(years %in% "2016") %>% 
+  pull(sum_inline)  
+})
+```
+
+We found that updating parameter values, and incorporating uncertainty, did not alter the average annual additional notifications from stopping the BCG schools' scheme when the annual decrease was assumed to be 9% (`r pretty_suptabref("annual_prevent_tab", inline = TRUE)`). There was a large degree of uncertainty in this estimate with `r avg_annual_2001_9` notifications prevented annually if vaccination was stopped in 2001. As the assumed annual decrease in incidence rates was reduced the annual number of additional notifications prevented increased with `r avg_annual_2001_1` notifications prevented annually when the annual decrease was assumed to be 1.9% and vaccination stopping in 2001. There was some evidence that the average annual number of notifications prevented was greater when the annual decrease was estimated using notifications (`r avg_annual_2001_nots`, P: `r a_not_vs_1_2001`) and age-specific incidence rates (`r avg_annual_2001_inc`, P: `r a_inc_vs_1_2001`), compared to an assumed annual decrease of 1.9% (`r pretty_figref("boxplot_vac_prev", inline = TRUE)`). The estimate made using incidence rates again had a high degree of uncertainty. When an annual decrease of 1.9% was assumed the number of notifications prevented annually reduced with time: `r avg_annual_1_2006` from ending vaccination in 2006; `r avg_annual_1_2011` from ending vaccination in 2011, and `r avg_annual_1_2016` from ending vaccination in 2016.
+
+```{r graph-avg-add-nots, fig.cap = pretty_figref("boxplot_annual_not_prev", "Annual additional notifications in 15-29 year olds from stopping the BCG schools' scheme in 2001, 2006, 2011, and 2016 until 2028. The years presented were dictated by the 5 year timestep of the model. The percentage annual decrease scenarios considered were based on those considered by the JVCI BCG subgroup, with the addition of a scenario using aggregate notification data and a scenario using estimates of age-specific incidence rates in the UK born. Each boxplot summarises the output of 10,000 model simulations for each scenario. Outliers have been ommitted for clarity."), dpi = 330}
+avg_annual_not_prev %>% 
+  filter(years > 2000, years < 2021, !(scenario %in% "9% decrease (original parameters)")) %>% 
+  rename(Scenario = scenario) %>% 
+  ggplot(aes(x = Scenario, y = annual_add_nots, col = Scenario)) +
+  geom_boxplot(outlier.shape = NA, width = .6, position = "dodge") +
+  coord_flip() +
+  scale_colour_viridis_d(end = 0.9, direction = -1) +
+  labs(y = "Annual additional notifications (log scale)") +
+  scale_y_log10(breaks = c(2, 5, 10, 20, 40, 100, 300, 1200),
+                labels = comma,
+                limits = c(2, 1200)) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  facet_wrap(~years, scale = "fixed")
+```
+
+# Discussion
+
+The existing method for estimating the impact of the BCG schools' scheme produced uncertain estimates of the impact of ending the scheme in all years evaluated when parameter uncertainty and measurement error were included. Updating the annual decrease in TB notifications based on both notifications and using age-specific incidence rates resulted in increased TB cases due to ending universal school-age vaccination in all years considered. This resulted in fewer vaccines required to prevent a single notification in those vaccinated and an increase in the number of annual additional notifications from ending the scheme. A scenario with a 1.9% annual decrease in incidence rates was most comparable to our results based on notifications.
+
+This study reassesses a key piece of the quantitative evidence used to motivate the change in BCG vaccination policy in 2005. Our results provide new insights into the uncertainty of the previously published model predictions by including parameter uncertainty and measurement error. As the data on incidence rates in the white UK born in England and Wales were not available we considered two approaches to proxy them, and investigated multiple scenarios based on those explored by the JVCI BCG subgroup. Due to the uncertainty surrounding the coverage of the BCG schools' scheme,  Sutherland et al.'s assumption of 75% coverage has been used as a point estimate in the updated model.[@Sutherland1989] However, measurement error of the estimated incidence rates, and the change in notifications has been included. An improved estimate of the serial interval of TB has also been included. This means that the updated model provides an improved estimate of the magnitude of the impact of ending the BCG schools' scheme and more fully captures the uncertainty surrounding this estimate. Whilst this study does not attempt to provide an accurate estimate of the impact of the 2005 change in BCG vaccination policy in England and Wales, it does provide an estimate that is based on the available data and on the framework used to inform policy making. This allowed the strength of some the quantitative evidence used in the decision making process to be assessed. A weakness of the modelling framework used in this study is that it did not include: non-white ethnic groups; age groups outside those directly affected by vaccination; heterogeneous mixing between these groups; or the importation of cases. The exclusion of these factors means that our results are conservative. A final limitation is that this study only considers the impact of ending the BCG schools' scheme and not the impact of the introduction of the targeted neonatal vaccination program. This should be considered when evaluating the change in policy as a whole.
+
+Little work has been done to assess the impact of the 2005 change in BCG vaccination policy or to assess the quantitative evidence used in decision making. However, multiple studies have evaluated the cost effectiveness of various BCG programs and the impact of switching between them. A cluster-randomised trial in Brazil found that BCG vaccination of those at school-age was cheaper than treatment and would prevent one TB case per 381 vaccinations even with a vaccine effectiveness of only 34% (8-53%).[@Pereira2012] This is substantially fewer than our estimate of `r vac_prevent_1_2014` vaccines required to prevent a single notification within 15 years in 2014. However, the same trial found that for regions close to the equator BCG effectiveness was low in school-age children but unchanged in neonates,[@Barreto2014a] highlighting the importance of considering the BCG vaccines reduced effectiveness near the equator when determining vaccination policy.[@Fine1995] There is also some research which supports universal re-vaccination of those at school-age, in countries with high incidence and universal vaccination of neonates, as it may be cost effective when BCG effectiveness is moderate to high.[@Barreto2014a; @Dye2013a] There is some evidence that targeted vaccination of high risk neonates maybe more cost effective than universal vaccination of neonates.[@Usher2016; @Hersh2003] However, a study in Sweden found that incidence rates in Swedish-born children increased slightly after universal vaccination of neonates was discontinued in favour of targeted vaccination.[@Romanus1992] In France, which switched from universal vaccination of neonates to targeted vaccination in 2007, it has also been shown that targeted vaccination reduced coverage in those most at risk.[@Guthmann2011] Targeted vaccination may not be more cost effective that universal vaccination when possible reductions in transmission are considered. Our study indicated that a substantial number of cases due to transmission may be preventable if universal school-age BCG vaccination was still in place. This result is dependent on the effectiveness of BCG vaccination when given later in life, for which there is good evidence in the white UK born.[@Hart1972] We did not consider neonatal vaccination which would be less impacted by BCG's effectiveness reducing when given later in life, but would also be less likely to result in the same reductions in ongoing transmission.
+
+This study indicates that some of the evidence used to justify the 2005 change in BCG vaccination policy may have underestimated the impact of ending the scheme. It highlights the importance of including both parameter and measurement error, as excluding these sources of variation may lead to spuriously precise results. In addition, our exploration of the assumptions used to estimate the annual change in TB incidence rates in the white UK born illustrates the structural impact of assuming an annual decrease in TB incidence rates. More realistic estimates of the annual decrease in incidence rates resulted in a greatly increased impact of ending the BCG schools' scheme. Policy makers should consider these updated estimates when assessing the role of BCG vaccination in those at school-age.
+
+This study has reassessed some of the the evidence previously used in decision making, updating the approach with new data. However, as 15 years of detailed surveillance data have been collected since the ending of the BCG schools' scheme it is now possible to use regression based approaches to estimate the direct impact on incidence rates of ending the BCG schools' scheme. These approaches could also be used to estimate the impact of vaccinating high risk neonates, which may out-way any negative impacts of ending the BCG schools' scheme. In addition, the development, and use, of a transmission dynamic model would allow the more accurate estimation of indirect effects and the forecasting of long term impacts.
+
+**Acknowledgements**
+
+The authors thank the TB section at Public Health England (PHE) for maintaining the Enhanced Tuberculosis Surveillance (ETS) system; all the healthcare workers involved in data collection for the ETS.
+
+**Contributors**
+
+SA, HC, and EBP conceived and designed the work. SA undertook the analysis with advice from all other authors. All authors contributed to the interpretation of the data. SA wrote the first draft of the paper and all authors contributed to subsequent drafts. All authors approve the work for publication and agree to be accountable for the work.
+
+**Funding** 
+
+SEA, HC, and EBP are funded by the National Institute for Health Research Health Protection Research Unit (NIHR HPRU) in Evaluation of Interventions at University of Bristol in partnership with Public Health England (PHE). The views expressed are those of the author(s) and not necessarily those of the NHS, the NIHR, the Department of Health or Public Health England.
+
+**Conflicts of interest** 
+
+HC reports receiving honoraria from Sanofi Pasteur, and consultancy fees from AstraZeneca, GSK and IMS Health, all paid to her employer.
+
+**Accessibility of data and programming code**
+
+The code for the analysis contained in this paper can be found at: DOI:10.5281/zenodo.2583056
+
+
+# References
+
+<div id = 'refs'></div>
+
+# Abstract
+
+## Background
+
+In 2005, England and Wales switched from universal BCG vaccination for school-age children to targeted vaccination of neonates. We assessed some of the quantitative evidence that informed this policy change.
+
+## Methods
+
+We recreated a previous approach for estimating the impact of ending the BCG schools' scheme in England and Wales, updating the model with parameter uncertainty. We investigated scenarios considered by the Joint Committee on Vaccination and Immunisation, and explored new approaches using notification data. We estimated the number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools’ scheme.
+
+## Results
+
+We found a 1.9% annual decrease in Tuberculosis incidence rates best matched our estimates from notifications. We estimate that `r  str_replace(vac_2004_1, "IQR", "Interquartile range (IQR)")` vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, `r avg_annual_2001_1` additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, `r avg_annual_1_2016` additional annual notifications would have occurred.
+
+## Conclusions
+
+Our estimates of the impact of ending the BCG schools' scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools' scheme was found to be greater than previously thought when parameter values were updated and notifications were used. Our results highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
+
+# Supplementary Information: Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
+
+Sam Abbott, Hannah Christensen, Ellen Brooks-Pollock
+
+## Recreating the estimation model of Sutherland et al.
+
+### Estimating notification rates
+
+The effectiveness of the BCG vaccine was originally estimated by an MRC trial in 1953 at 80% in the United Kingdom [@Hart1972]. As follow up to this trial members of the MRC bio-statistics unit conducted a series of notification surveys attempting to ascertain any change in effectiveness, as well as acting as an estimate of notification rate across different demographics.[@Sutherland1987a] Notification surveys were carried out at 5 year intervals in 1973, 1978 and 1983; looking at those aged 15-24 years old in England and Wales. For the 1983 survey records of BCG status, Tuberculin status and ethnicity were extracted from the records of notifying physicians and the records of the local health and education authorities. Totals, across the study period, were then aggregated for the following group; Tuberculin negative and BCG positive, Tuberculin negative and BCG negative, Tuberculin positive and not vaccinated and those who did not participate. These totals were then combined with the population estimates for each cohort at 13 years of age to estimate the ethnic make up of the population, and to construct notification rates for each category. Data drawn from a range of sources including: Office of National Statistics data; annual local authority returns for total tuberculin test results; BCG vaccinations in the schools' scheme; and the Labour force survey (1983),
+
+For 1983 this corresponded with 874 notifications in the white UK born in England and Wales, between 15-24, with participation at 80%. As the number of Tuberculin negative subjects not given BCG was unreported this was estimated at 1.9% of all vaccinated with the BCG. Allowances were also made for those already vaccinated prior to the schools' scheme. See [@Sutherland1987a] for full details of the survey construction and the additional assumptions used to give similar estimates for both the 1973 and 1978 surveys. The findings of these surveys were as follows; in the white population notification rates had fallen by an annual average of 9% and BCG efficacy had remained high.[@Sutherland1989; @Springett1988]
+
+Evidence suggests that the BCG vaccine has a high efficacy for at least the first 15 years after vaccination, therefore the authors extrapolated from the data on the 20-24 cohort to a theoretical 25-29 year old cohort. Data on the notifications for the first 6 months of the 1983 survey was available and this was then scaled using the ratio of notifications from this age group against the total number of notifications recorded in that year. Population estimates from the 20-24 cohort were adjusted for all causes of mortality (0.34%). Migration was ignored. The tuberculin positive cohort had a sharp decline in the previous two cohorts, therefore it was assumed that this continued. Lastly the efficacy was estimated as being that seen in the 20-24 cohort but with the same decline in protection seen between the last two cohorts. These assumptions allowed notification rates to be estimated for the 25-29 year old population, resulting in a complete cohort over the projected 15 years of BCG effectiveness.
+
+### Construction of forward estimates
+
+Based on these estimated notification rates Sutherland et al. then sought to quantify the ongoing risk of developing notified tuberculosis, projected forward in time, for both the vaccinated and unvaccinated populations. To construct these estimates several key assumptions, based on the results seen in the previous surveys, were made. Firstly, it was assumed that efficacy was not degrading within the white population and therefore historic estimates would continue to apply into the future. Additionally, it was assumed that the decay of 9% in notification rates, across all white populations, would continue indefinitely.
+
+These assumptions allow the notification rates in both the BCG vaccinated and unvaccinated groups to be projected forward in time. By assuming that the schools' scheme is responsible for the observed variation between vaccinated and unvaccinated rates the rate of prevented cases can then be estimated. By scaling this against a cohort of 100,000 13 year olds the number of prevented cases over a 15 year period can be projected for each cohort. By dividing the total number in a given cohort by the number of prevented cases the estimated number of vaccines required to prevent a single case in the 15 year period can then be calculated.
+
+To estimate the total number of prevented notifications, for each cohort, in England and Wales the total number receiving the BCG and the coverage of the schools' scheme was required. The coverage of the BCG schools' scheme was estimated from annual reports of the DHSS and was assumed to be 75% for all years. The number of BCG vaccines given each year was estimated from the DHSS returns for the years 1967 to 1981, it was then taken as 75% of the estimated white population aged 13 years from 1982-1996, for each 5 year period thereafter it was assumed to be 2.1 million. 
+
+Using the above information and the projected differences between vaccinated and unvaccinated notifications allows the number of prevented notifications for each age group to be found for each year. This can then be combined to give the total number of prevented notifications for those aged between 15-29. To properly understand these estimates, estimates of the projected yearly notifications if the scheme continues are required. These totals were derived from the vaccinated and unvaccinated rates supplemented with similar projections from the tuberculin positive or otherwise ineligible sourced from the 1983 BCG survey.[@Sutherland1987a]
+
+## Model validation
+
+The percentage of cases in the first year was fitted to the Sutherland et al. estimates using the least squares method, such that $f=0.764$.
+
+```{r orig-results-tab}
+comparision_tab %>% 
+  pretty_table(label = "model_validation", 
+               caption = "Comparision of results results published by Sutherland et al. vs. our recreated model. This table shows the total notifications including primary and secondary effects from ending the BCG schools' scheme at various times in White adults aged 15-29 years old in England and Wales.",
+               tab_fun = knitr::kable,
+               cap_fun = pretty_suptabref)
+```
+
+## Results 
+
+```{r plot-annual-change, fig.cap = pretty_supfigref("annual_tb_decrease_plot", "Annual percentage change in white UK born incidence rates for those aged 15-19, 20-24, and 25-29 years old under different scenarios. For the notification and incidence rate scenarios each line represents the median of 10,000 parameter samples."), dpi = 330}
+per_annual_change_yr_avg %>% 
+  mutate(`Annual Change` = -1 * `Annual Percentage Decrease`) %>% 
+  ggplot(aes(x = Year, y = `Annual Change`, col = Scenario, group = Scenario)) +
+  geom_line() +
+  facet_wrap(~age_group, nrow = 1, scales = "fixed") +
+  scale_y_continuous(labels = percent, breaks = c(-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3)) +
+  scale_colour_viridis_d(end = 0.9, direction = 1 ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+
+```{r tab-vac-prevent}
+prepare_results_table <- function(df = NULL, year_new = NULL) {
+  
+
+  tab <- df %>% 
+  select(scenario, year, sum) %>% 
+  spread(key = scenario, value = sum) %>% 
+  select(year, `9% decrease (original parameters)`, `9% decrease`, `3.9% decrease`, `1.9% decrease`,
+         `0% decrease`, Notifications, `Incidence Rates`) %>% 
+    rename(!!year_new := year)
+  
+  return(tab)
+}
+
+vac_prevent_tab %>% 
+  rename(year= year_vac) %>% 
+prepare_results_table(year_new = "Year of Vaccination") %T>% 
+  save_formated("tab-vac-prevent") %>% 
+  pretty_table(label = "vac_prevent_tab",
+               caption = "The median number (with the 95% interquartile range) of vaccines required to prevent a single case of Tuberculosis within 15 years in a White UK born adult vaccinated at 13 years old.",
+               tab_fun = knitr::kable,
+               cap_fun = pretty_suptabref)
+```
+
+
+```{r tab-annual_nots_prevented}
+avg_annual_not_tab %>% 
+  rename(year = years) %>% 
+  filter(!(year %in% "2026")) %>% 
+prepare_results_table(year_new = "Year Ending Scheme") %T>% 
+  save_formated("tab-annual_nots_prevented") %>% 
+  pretty_table(label = "annual_prevent_tab",
+               caption = "The median number (with the 95% interquartile range) of additional annual notifications due to ending the BCG schools' scheme in selected years.",
+               tab_fun = knitr::kable,
+               cap_fun = pretty_suptabref)
+```
+

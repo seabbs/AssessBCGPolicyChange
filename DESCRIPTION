@@ -1,0 +1,38 @@
+Package: AssessBCGPolicyChange
+Type: Package
+Title: Assess the Evidence Used to Motivate the 2005 Change in BCG Vaccination Policy
+Version: 0.1.0
+Authors@R: person("Sam", "Abbott", email = "contact@samabbott.co.uk", role = c("aut", "cre"))
+Description: Using newly available data and modern methods this analysis reevaluates some of the evidence used in justifying the 2005 change in BCG policy in England.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    tidyverse,
+    tbinenglanddataclean,
+    ggplot2,
+    prettypublisher,
+    matrixStats,
+    doParallel,
+    purrr,
+    foreach
+Suggests:
+    testthat,
+    devtools,
+    pkgdown,
+    knitr,
+    rmarkdown,
+    pomp,
+    multidplyr
+Remotes: seabbs/tbinenglanddataclean, 
+  seabbs/prettypublisher,
+  tidyverse/ggplot2,
+  hadley/pkgdown,
+  HenrikBengtsson/matrixStats,
+  hadley/multidplyr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+URL: http://www.samabbott.co.uk/AssessBCGPolicyChange,
+        https://github.com/seabbs/AssessBCGPolicyChange
+BugReports: https://github.com/seabbs/AssessBCGPolicyChange/issues
+VignetteBuilder: knitr
