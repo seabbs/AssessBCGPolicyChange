@@ -13,12 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Dear Editor,
 
-Please find attached our manuscript, entitled "Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales". 
+Please find attached our manuscript, entitled “Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales” for consideration for publication in the journal of Epidemiology and Community Health.
 
-We feel our manuscript will be of interest to you and the journal's readership because Bacillus Calmette-Guérin (BCG) is one of the most widely-used vaccines worldwide and our study explores the impact of changing BCG vaccination policy. We found that previous estimates of the impact of ending the BCG schools' scheme may have been spuriously precise as parameter uncertainty and measurement error were not fully included. Using surveillance data, we updated these estimates and found that the impact of ending the BCG schools' scheme was greater than previously estimated. These results highlight the importance of including parameter and measurement error when forecasting the impact of changes in vaccination policy. They also highlight the benefits of reproducibility as our study built on work previously published in this journal. This study benefited from access to previously published work that was used by policy makers. We combined this with more modern statistical methods to fully capture uncertainty and used recent data to increase the accuracy of the model estimates.
+In this paper, we examine a previous analysis of the impact of stopping universal vaccination in England published in the journal of Epidemiology and Community Health in 1989 in light of changing TB epidemiology. Using recent surveillance data, together with modern statistical methods to capture uncertainty, we found that the impact of ending the BCG schools’ scheme was greater than previously estimated. Previous estimates were spuriously precise as parameter uncertainty and measurement error were not fully included. Our work highlights the benefits of reproducibility as our study built on work previously published in this journal. 
 
+We believe our manuscript will be of interest to you and the journal’s readership because Bacillus Calmette-Guérin (BCG) is one of the most widely-used vaccines worldwide and our study explores the impact of changing BCG vaccination policy.
 We do not have any issues relating to the journal policies. All authors have approved this version of the manuscript for submission and the content of the manuscript has not been published or submitted elsewhere.
 
 With kind regards, on behalf of all the co-authors,
 
 Sam Abbott
+
+
