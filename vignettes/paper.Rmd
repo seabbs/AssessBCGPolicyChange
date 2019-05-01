@@ -708,7 +708,7 @@ The percentage of cases in the first year was fitted to the Sutherland et al. es
 ```{r orig-results-tab}
 comparision_tab %>% 
   pretty_table(label = "model_validation", 
-               caption = "Comparision of results results published by Sutherland et al. vs. our recreated model. This table shows the total notifications including primary and secondary effects from ending the BCG schools' scheme at various times in ethnic White adults aged 15-29 years old in England and Wales.",
+               caption = "Comparison of results published by Sutherland et al. vs. our recreated model. This table shows the total notifications including primary and secondary effects from ending the BCG schools' scheme at various times in ethnic White adults aged 15-29 years old in England and Wales.",
                tab_fun = knitr::kable,
                cap_fun = pretty_suptabref)
 ```
