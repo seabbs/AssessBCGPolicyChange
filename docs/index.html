@@ -155,16 +155,9 @@ devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/
 <p>The rstudio client can be found on port :8787 at your local machines ip. The default username:password is assessbcgpolicychange:assessbcgpolicychange, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.</p>
 <p>If you have access to the required underlying raw data (see <a href="https://www.samabbott.co.uk/tbinenglanddataclean/"><code>tbinenglanddataclean</code></a>) then the entire analysis can be reproduced from scratch by adding the following to the <code>docker run</code> command, with the data saved into <code>data/tb_data</code>. The data requirements, and structure, can be found <a href="https://www.samabbott.co.uk/tbinenglanddataclean/">here</a>.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">--mount</span> type=bind,source=<span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>/data/tb_data,target=/home/DirectEffBCGPolicyChange/data/tb_data</code></pre></div>
-<p>Alternatively the analysis environment can be accessed via <a href="https://mybinder.org/v2/gh/seabbs/DirectEffBCGPolicyChange/master?urlpath=rstudio">binder</a>.</p>
+<p>Alternatively the analysis environment can be accessed via <a href="https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio">binder</a>.</p>
 </div>
 </div>
-</div>
-<div id="docker-1" class="section level1">
-<h1 class="hasAnchor">
-<a href="#docker-1" class="anchor"></a>Docker</h1>
-<p>This packge was developed in a docker container based on the tidyverse docker image. To run the docker image run:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">docker</span> run -d -p 8787:8787 --name assessbcgpolicychange -e USER=seabbs -e PASSWORD=seabbs seabbs/assessbcgpolicychange</code></pre></div>
-<p>The rstudio client can be found on port :8787 at your local machines ip. The default username:password is seabbs:seabbs, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.</p>
 </div>
   </div>
 

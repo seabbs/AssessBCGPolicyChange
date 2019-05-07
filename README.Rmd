@@ -92,15 +92,4 @@ If you have access to the required underlying raw data (see [`tbinenglanddatacle
 --mount type=bind,source=$(pwd)/data/tb_data,target=/home/DirectEffBCGPolicyChange/data/tb_data
 ```
 
-Alternatively the analysis environment can be accessed via [binder](https://mybinder.org/v2/gh/seabbs/DirectEffBCGPolicyChange/master?urlpath=rstudio).
-
-# Docker
-
-This packge was developed in a docker container based on the tidyverse docker image. To run the docker image run:
-
-```{bash, eval = FALSE}
-docker run -d -p 8787:8787 --name assessbcgpolicychange -e USER=seabbs -e PASSWORD=seabbs seabbs/assessbcgpolicychange
-```
-
-The rstudio client can be found on port :8787 at your local machines ip. The default username:password is seabbs:seabbs, set the user with -e USER=username, and the password with - e PASSWORD=newpasswordhere. The default is to save the analysis files into the user directory.
-
+Alternatively the analysis environment can be accessed via [binder](https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio).
