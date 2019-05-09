@@ -66,7 +66,7 @@ Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, Univer
 
 **Correspondence to:** Sam Abbott, Bristol Medical School: Population Health Sciences, University of Bristol, Bristol BS8 2BN, UK; sam.abbott@bristol.ac.uk; 01173310185
 
-**Words:** *Title:* 15 *Abstract:* 250 *Paper:* 2885
+**Words:** *Title:* 15 *Abstract:* 250 *Paper:* 2900
 
 # What is already known on this subject
 
@@ -84,6 +84,18 @@ Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, Univer
 - The inclusion of parameter uncertainty, and measurement error, allowed the uncertainty in the final estimates to be presented. Previously published estimates may have been spuriously precise.
 
 - This study highlights the need for a more detailed evaluation of the 2005 change in BCG policy. In particular, the impact of including the introduction of targeted neonatal vaccination and capturing the long term, indirect, effects needs further study.
+
+# Strengths and limitations of this study
+
+-	This study reassesses a key piece of the quantitative evidence used to motivate the change in BCG vaccination policy in 2005.
+
+-	The inclusion of parameter uncertainty, and measurement error, allowed the uncertainty in the final estimates to be presented. Previously published estimates may have been spuriously precise.
+
+- The model used in this study is not the most accurate method for assessing the impact of ending the BCG schools’ scheme. However, it does provide an estimate that is based on the available data and on the framework used to inform policy making. This allowed the strength of some the quantitative evidence used in the decision-making process to be assessed. 
+
+- A weakness of the modelling framework used in this study is that it did not include the whole population or age groups outside those directly affected by vaccination. The exclusion of these factors means that our results are conservative. 
+
+- This study only considered the impact of ending the BCG schools’ scheme and not the impact of the introduction of the targeted neonatal vaccination program. This should be considered when evaluating the change in policy as a whole.
 
 # Introduction
 
@@ -216,6 +228,10 @@ scenario_results <- scenario_results %>%
                              "3.9% decrease", "1.9% decrease", "0% decrease", "Notifications", 
                              "Incidence Rates"))))
 ```
+
+## Patient and public involvement
+
+We did not involve patients or the public in this study.
 
 # Results
 
@@ -652,7 +668,7 @@ HC reports receiving honoraria from Sanofi Pasteur, and consultancy fees from As
 
 **Accessibility of data and programming code**
 
-The code for the analysis contained in this paper can be found at: DOI:10.5281/zenodo.2583056
+The code and data for the analysis contained in this paper can be found at: DOI:10.5281/zenodo.2583056
 
 
 # References
