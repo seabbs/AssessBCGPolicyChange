@@ -1,7 +1,7 @@
 Package: AssessBCGPolicyChange
 Type: Package
 Title: Assess the Evidence Used to Motivate the 2005 Change in BCG Vaccination Policy
-Version: 0.1.0
+Version: 1.1.0
 Authors@R: person("Sam", "Abbott", email = "contact@samabbott.co.uk", role = c("aut", "cre"))
 Description: Using newly available data and modern methods this analysis reevaluates some of the evidence used in justifying the 2005 change in BCG policy in England.
 License: MIT + file LICENSE

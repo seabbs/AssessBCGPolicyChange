@@ -677,21 +677,30 @@ The code and data for the analysis contained in this paper can be found at: DOI:
 
 # Abstract
 
-## Background
+## Objectives
 
-In 2005, England and Wales switched from universal BCG vaccination against tuberculosis (TB) disease for school-age children to targeted vaccination of neonates. We assessed the quantitative evidence that informed this policy change.
+In 2005, England and Wales switched from universal BCG vaccination against tuberculosis (TB) disease for school-age children to targeted vaccination of neonates. We aimed to assess the quantitative evidence that informed this policy change.
 
-## Methods
+## Design
 
-We recreated a previous approach for estimating the impact of ending the BCG schools' scheme in England and Wales, updating the model with parameter uncertainty. We investigated scenarios considered by the UK's Joint Committee on Vaccination and Immunisation, and explored new approaches using notification data. We estimated the number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools’ scheme.
+We recreated a previous approach for estimating the impact of ending the BCG schools’ scheme, updating the model with parameter uncertainty. We investigated scenarios considered by the UK’s Joint Committee on Vaccination and Immunisation, and explored new approaches using notification data.
+
+## Setting 
+
+England and Wales.
+
+## Outcome measures
+
+The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools’ scheme.
 
 ## Results
 
-We found a 1.9% annual decrease in TB incidence rates best matched notification data. We estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)")` vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, `r avg_annual_2001_1` additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, `r avg_annual_1_2016` additional annual notifications would have occurred.
+We found a 1.9% annual decrease in TB incidence rates best matched notification data. We estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(" - ", "-")` vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, `r avg_annual_2001_1  %>% str_replace(" - ", "-")` additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, `r avg_annual_1_2016  %>% str_replace(" - ", "-")` additional annual notifications would have occurred.
 
 ## Conclusions
 
-Our estimates of the impact of ending the BCG schools' scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools' scheme was found to be greater than previously thought when parameter values were updated and notification data were used. Our results highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
+Our estimates of the impact of ending the BCG schools’ scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when parameter values were updated, and notification data were used. Our results highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
+
 
 # Supplementary Information: Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
 
