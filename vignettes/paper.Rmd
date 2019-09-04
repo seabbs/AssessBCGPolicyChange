@@ -103,7 +103,7 @@ The Bacillus Calmette–Guérin (BCG) vaccine remains the only licensed vaccine 
 
 In England and Wales, universal school-aged vaccination was introduced after a MRC trial in the 1950s estimated BCG's effectiveness at 80% in the ethnic White UK born population.[@Hart1972] The policy remained in place until 2005, when England and Wales changed to targeted vaccination of neonates. The 2005 change in BCG vaccination policy was motivated by evidence of decreased transmission of TB, an increasing proportion of TB cases occurring in the non-UK born,[@PHE2017] and modelling evidence that suggested stopping the BCG schools' scheme would have minimal long term effects on incidence rates.[@Sutherland1989] Due to the complex nature of both TB and the BCG vaccine, the ongoing impact of this change in policy is hard to directly estimate, with decision makers relying on expert opinion, evidence from surveillance data, and insight from modelling studies.  
 
-In 1987, an assessment of the school-age vaccination program was carried out in England and Wales.[@Sutherland1989] This study was used, combined with a sensitivity analysis of notification rates, as supporting evidence by the Joint Committee on Vaccination and Immunisation (JVCI) BCG subgroup for the change in vaccination policy.[@JVCIBCG2002; @JVCIBCG2003] This papers aims to re-evaluate this modelling, and re-estimate the predicted impact of stopping the schools' scheme. Whilst these results are retrospective they may be used by policy makers to assess some of the ongoing impact of ending the BCG schools' scheme. In addition they highlight the importance of including uncertainty when forecasting the impact of changes in vaccination policy.
+In 1987, an assessment of the school-age vaccination program was carried out in England and Wales.[@Sutherland1989] This study was used, combined with a sensitivity analysis of notification rates, as supporting evidence by the Joint Committee on Vaccination and Immunisation (JVCI) BCG subgroup for the change in vaccination policy.[@JVCIBCG2002; @JVCIBCG2003] This paper aims to re-evaluate this modelling, and re-estimate the predicted impact of stopping the schools' scheme. Re-evaluating this work allows for the strength of the evidence used in decision making to be assessed and may highlight any issues with the approach used.
 
 # Methods
 
@@ -231,7 +231,7 @@ scenario_results <- scenario_results %>%
 
 ## Patient and public involvement
 
-We did not involve patients or the public in this study.
+We did not involve patients or the public in design or planning of this study.
 
 # Results
 
@@ -276,8 +276,8 @@ lll_per_diff <-  quantile(abs(per_dif_update), 0.025) * 100
 hhh_per_diff <-  quantile(abs(per_dif_update), 0.975) * 100
 
 median_lll_hhh_error <- pretty_ci(median_per_diff, lll_per_diff, hhh_per_diff, 
-                                  inline = TRUE, percentage = TRUE, note = "2.5-97.5% Q: ",
-                                  sep = " - ")
+                                  inline = TRUE, percentage = TRUE, note = "2.5, 97.5% Q: ",
+                                  sep = ", ")
 ## Make dataframes
 diff_orig_update <- diff_orig_update %>% 
   make_suth_df
@@ -331,7 +331,7 @@ per_annual_change_avg <- per_annual_change %>%
   mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
   mutate(pa_change =  pretty_ci(median, lll, hhh, 
                                   inline = TRUE, percentage = TRUE,
-                                note = "2.5-97.5% Q: ", sep = " - ")) %>% 
+                                note = "2.5, 97.5% Q: ", sep = ", ")) %>% 
   mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(paste0(pretty_round(., digits = 2), "%")))
 
 
@@ -369,7 +369,7 @@ min_per_annual_change_yr_avg <- per_annual_change_yr_avg %>%
   mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
   mutate(pa_change =  pretty_ci(`Annual Percentage Decrease`, lll, hhh, 
                                 inline = TRUE, percentage = TRUE, 
-                                note = "2.5-97.5% Q: ", sep = " - ")) %>% 
+                                note = "2.5, 97.5% Q: ", sep = ", ")) %>% 
   mutate(Year = Year / 100)
   
 pomp::stew(file = file.path("results", prefix, "min-not.rda"), {
@@ -384,8 +384,8 @@ max_per_annual_change_yr_avg <- per_annual_change_yr_avg %>%
   mutate_if(.predicate = funs(is.numeric(.)), .funs = funs(. * 100)) %>% 
   mutate(pa_change =  pretty_ci(`Annual Percentage Decrease`, lll, hhh, 
                                 inline = TRUE, percentage = TRUE,
-                                note = "2.5-97.5% Q: ",
-                                sep = " - ")) %>% 
+                                note = "2.5, 97.5% Q: ",
+                                sep = ", ")) %>% 
     mutate(Year = Year / 100)
   
 pomp::stew(file = file.path("results", prefix, "max-not.rda"), {
@@ -394,7 +394,20 @@ pomp::stew(file = file.path("results", prefix, "max-not.rda"), {
 })
 ```
 
-We found that the assumption of a 9% annual decrease in incidence rates in the ethnic White UK born was not comparable to estimates using either notification data or age-specific incidence rates in the time period studied (`r pretty_supfigref("annual_tb_decrease_plot", inline = TRUE)`). The median annual decrease estimated using notifications was `r  str_replace(avg_not, "Q", "Quantiles (Q)")`, with a maximum of `r max_not$pa_change` in `r max_not$Year` and a minimum of `r min_not$pa_change` in `r min_not$Year`. Using age-specific incidence rates we estimated the median annual decrease in incidence rates for 15-19 year olds was `r avg_inc[1]`, `r avg_inc[2]` for 20-24 year olds, and `r avg_inc[3]` for 25-29 year olds. There was substantial variation between years and a high degree of uncertainty.
+We found that the assumption of a 9% annual decrease in incidence rates in the ethnic White UK born was not comparable to estimates using either notification data or age-specific incidence rates in the time period studied (`r pretty_figref("annual_tb_decrease_plot", inline = TRUE)`). The median annual decrease estimated using notifications was `r  str_replace(avg_not, "Q", "Quantiles (Q)")`, with a maximum of `r max_not$pa_change` in `r max_not$Year` and a minimum of `r min_not$pa_change` in `r min_not$Year`. Using age-specific incidence rates we estimated the median annual decrease in incidence rates for 15-19 year olds was `r avg_inc[1]`, `r avg_inc[2]` for 20-24 year olds, and `r avg_inc[3]` for 25-29 year olds. There was substantial variation between years and a high degree of uncertainty.
+
+```{r plot-annual-change, fig.cap = pretty_figref("annual_tb_decrease_plot", "Annual percentage change in ethnic White UK born incidence rates for those aged 15-19, 20-24, and 25-29 years old under different scenarios. For the notification and incidence rate scenarios each line represents the median of 10,000 parameter samples."), dpi = 330}
+per_annual_change_yr_avg %>% 
+  mutate(`Annual Change` = -1 * `Annual Percentage Decrease`) %>% 
+  ggplot(aes(x = Year, y = `Annual Change`, col = Scenario, group = Scenario)) +
+  geom_line() +
+  facet_wrap(~age_group, nrow = 1, scales = "fixed") +
+  scale_y_continuous(labels = percent, breaks = c(-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3)) +
+  scale_colour_viridis_d(end = 0.9, direction = 1 ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
 
 ## Vaccines required to prevent a single notification
 
@@ -458,8 +471,8 @@ make_results_table <- function(df = NULL, group = NULL, metric = NULL) {
   summarise(median = median(!!metric), 
             lll = quantile(!!metric, 0.025),
             hhh = quantile(!!metric, 0.975)) %>% 
-  mutate(sum = pretty_ci(median, lll, hhh, digits = 0, sep = " - ")) %>%
-  mutate(sum_inline = pretty_inline_ci(sum, note = "2.5-97.5% Q: ")) %>%
+  mutate(sum = pretty_ci(median, lll, hhh, digits = 0, sep = ", ")) %>%
+  mutate(sum_inline = pretty_inline_ci(sum, note = "2.5, 97.5% Q: ")) %>%
   rowwise() %>% 
   mutate_at(.vars = c("sum", "sum_inline"),
             .funs = funs(ifelse(median == lll && median == hhh, 
@@ -668,7 +681,7 @@ HC reports receiving honoraria from Sanofi Pasteur, and consultancy fees from As
 
 **Accessibility of data and programming code**
 
-The code and data for the analysis contained in this paper can be found at: DOI:10.5281/zenodo.2583056
+The code and data for the analysis contained in this paper can be found at: https://doi.org/10.5281/zenodo.2635687
 
 
 # References
@@ -695,7 +708,7 @@ The number of vaccines needed to prevent a single notification, and the average 
 
 ## Results
 
-We found a 1.9% annual decrease in TB incidence rates best matched notification data. We estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(" - ", "-")` vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, `r avg_annual_2001_1  %>% str_replace(" - ", "-")` additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, `r avg_annual_1_2016  %>% str_replace(" - ", "-")` additional annual notifications would have occurred.
+We found a 1.9% annual decrease in TB incidence rates best matched notification data. We estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(", ", ",")` vaccines would have been required to prevent a single notification in 2004. If the scheme had ended in 2001, `r avg_annual_2001_1  %>% str_replace(", ", ",")` additional annual notifications would have occurred compared to if the scheme had continued. If the scheme ended in 2016, `r avg_annual_1_2016  %>% str_replace(", ", ",")` additional annual notifications would have occurred.
 
 ## Conclusions
 
@@ -739,18 +752,6 @@ comparision_tab %>%
 ```
 
 ## Results 
-
-```{r plot-annual-change, fig.cap = pretty_supfigref("annual_tb_decrease_plot", "Annual percentage change in ethnic White UK born incidence rates for those aged 15-19, 20-24, and 25-29 years old under different scenarios. For the notification and incidence rate scenarios each line represents the median of 10,000 parameter samples."), dpi = 330}
-per_annual_change_yr_avg %>% 
-  mutate(`Annual Change` = -1 * `Annual Percentage Decrease`) %>% 
-  ggplot(aes(x = Year, y = `Annual Change`, col = Scenario, group = Scenario)) +
-  geom_line() +
-  facet_wrap(~age_group, nrow = 1, scales = "fixed") +
-  scale_y_continuous(labels = percent, breaks = c(-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3)) +
-  scale_colour_viridis_d(end = 0.9, direction = 1 ) +
-  theme_minimal() +
-  theme(legend.position = "bottom")
-```
 
 
 ```{r tab-vac-prevent}
