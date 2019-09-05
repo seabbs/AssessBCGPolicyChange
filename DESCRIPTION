@@ -27,7 +27,6 @@ Suggests:
 Remotes: seabbs/tbinenglanddataclean, 
   seabbs/prettypublisher,
   tidyverse/ggplot2,
-  hadley/pkgdown,
   HenrikBengtsson/matrixStats,
   hadley/multidplyr
 Roxygen: list(markdown = TRUE)
