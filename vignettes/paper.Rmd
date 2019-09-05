@@ -1,5 +1,5 @@
 ---
-title: "Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales"
+title: "Reassessing the evidence for universal school-age Bacillus Calmette Guerin (BCG) vaccination in England and Wales: re-evaluating and updating a modelling study"
 author: "Sam Abbott, Hannah Christensen, Ellen Brooks-Pollock"
 output: 
       word_document:
@@ -109,7 +109,7 @@ In 1987, an assessment of the school-age vaccination program was carried out in 
 
 ## Modelling the impact of ending the BCG schools scheme
 
-We implemented Sutherland et al.’s model for estimating the impact of ending the BCG schools scheme.[@Sutherland1989] This model was based on data from TB notification surveys conducted in 1973, 1978, and 1983.[@Sutherland1987a] These were used to estimate incidence rates, stratified by BCG vaccination status (vaccinated, unvaccinated, and ineligible), in the ethnic White UK born population of England and Wales aged 15-19 years old, 20-24 years old and 25-29 years old. Future incidence rates were forecast by assuming an annual decrease in incidence rates, which was based on historic trends.[@Sutherland1989; @Springett1988] Primary impacts from ending the schools scheme were estimated by calculating the difference in incidence rates between the vaccinated and unvaccinated populations. Additional notifications from TB transmission were then calculated using a transmission chain model. Based on data availability the model used a 5 year timestep. More detail is given in the following sections.
+We implemented Sutherland et al.’s model for estimating the impact of ending the BCG schools scheme.[@Sutherland1989] This model was based on data from TB notification surveys conducted in 1973, 1978, and 1983.[@Sutherland1987a] These were used to estimate incidence rates, stratified by BCG vaccination status (vaccinated, unvaccinated, and ineligible), in the ethnic White UK born population of England and Wales aged 15-19 years old, 20-24 years old and 25-29 years old. Future incidence rates were forecast by assuming an annual decrease in incidence rates, which was based on historic trends.[@Sutherland1989; @Springett1988] Primary impacts from ending the schools scheme were estimated by calculating the difference in incidence rates between the vaccinated and unvaccinated populations. Additional notifications from TB transmission were then calculated using a transmission chain model. This model allowed both the number of additional notifications to be estimated as well as estimating when approximately they would occur after the initial notification. Based on data availability the model used a 5 year timestep. More detail is given in the following sections.
 
 ### Estimating notification rates
 
@@ -177,9 +177,9 @@ orig_parameter_est <- sample_model_parameters(incidence_rates = sutherland_incid
   population_data = sutherland_data, samples = 1, as_sutherland = TRUE)
 ```
 
-## Updating model parameter estimates
+## Updating model parameter estimates and incorporating parameter uncertainty
 
-Incidence rates were included as point estimates in [@Sutherland1989]; in the updated model we included uncertainty in these rates. We estimated notifications for 1973, 1978, and 1983, using published incidence rates and population estimates. Samples were then generated using a Poisson distribution.[@Sutherland1989; @Sutherland1987a] These samples were then used to estimate a distribution of incidence rates. Sutherland et al. assumed a serial interval of 2 years between linked notifications. We updated this assumption using, the currently best available, estimate of 1.44 (95% CI 1.29 to 1.63) years.[@Borgdorff2011]
+Incidence rates were included as point estimates in [@Sutherland1989]; in the updated model we included uncertainty in these rates. We didi this by first estimating notifications for 1973, 1978, and 1983, using published incidence rates and population estimates. Samples were then generated using a Poisson distribution.[@Sutherland1989; @Sutherland1987a] These samples were then used to estimate a distribution of incidence rates to replace the point estimates used in the original analysis. Sutherland et al. assumed a serial interval of 2 years between linked notifications. Using a literature source published after [@Sutherland1989] we updated this assumption with an estimate of 1.44 (95% CI 1.29 to 1.63) years.[@Borgdorff2011]
 
 ```{r sample parameter space}
 ## Generate parameter samples - see ?sample_model_parameters for details
@@ -189,7 +189,7 @@ parameter_samples <- pomp::bake(file = file.path("results", prefix, "parameter_s
 })
 ```
 
-We considered the original assumption of a 9% annual decrease in incidence rates as well as three scenarios based on those considered by the JCVI BCG subgroup:[@JVCIBCG2002; @JVCIBCG2003] these were a 3.9% decrease, a 1.9% decrease, and no change annual in incidence rates. I also estimated the annual decrease in incidence rates in the ethnic White UK born using two proxy measures. The first proxy measure was the annual change in notifications in England and Wales, which was estimated using data from Public Health England (PHE). The standard deviation (SD) of this measure was then calculated using the `prop.test` function in R.[@R] The second proxy used was the annual decrease in the UK born age-specific incidence rates in the English population. These were calculated using notification data from the Enhanced TB surveillance system (ETS) and the June Labour Force Survey.[@PHE2017] Incidence rates (with SDs) were estimated using the epiR package.[@EpiR] Uncertainty was incorporated by sampling from a normal distribution for both proxy measures. Data collection for the ETS began in 2000 and prior to this notification data was only available in years with notifications surveys (1973, 1978, and 1983). We therefore estimated incidence rates between 1984 and 1999, and for the years between notifications surveys (1974-1977 and 1979-1982), using locally estimated scatterplot smoothing (LEOSS) regression fitted to incidence rates published in [11] and the estimated incidence rates from 2000 on-wards. LOESS is a local regression method that combines multiple regression models in a k-nearest neighbours meta-model.[@FoxSnow:2019] This approach allows nonlinear trends to be fitted to using a series of linear models. For years prior to 1973 the annual decreases were assumed to be the mean of the previous 3 years of data. For both proxy measures the annual decreases in incidence rates post 2016 were assumed to be the average of the estimates in 2013, 2014, and 2015. 
+We considered the original assumption of a 9% annual decrease in incidence rates as well as three scenarios based on those considered by the JCVI BCG subgroup:[@JVCIBCG2002; @JVCIBCG2003] these were a 3.9% decrease, a 1.9% decrease, and no change annual in incidence rates. We also estimated the annual decrease in incidence rates in the ethnic White UK born using two proxy measures as data were not available. The first proxy measure was the annual change in notifications in England and Wales, which was estimated using data from Public Health England (PHE). The standard deviation (SD) of this measure was then calculated using the `prop.test` function in R.[@R] The second proxy used was the annual decrease in the UK born age-specific incidence rates in the English population. These were calculated using notification data from the Enhanced TB surveillance system (ETS) and the June Labour Force Survey.[@PHE2017] Incidence rates (with SDs) were estimated using the epiR package.[@EpiR] Uncertainty was incorporated by sampling from a normal distribution for both proxy measures. Data collection for the ETS began in 2000 and prior to this notification data was only available in years with notifications surveys (1973, 1978, and 1983). We therefore estimated incidence rates between 1984 and 1999, and for the years between notifications surveys (1974-1977 and 1979-1982), using locally estimated scatterplot smoothing (LEOSS) regression fitted to incidence rates published in [11] and the estimated incidence rates from 2000 on-wards. LOESS is a local regression method that combines multiple regression models in a k-nearest neighbours meta-model.[@FoxSnow:2019] This approach allows nonlinear trends to be fitted to using a series of linear models. For years prior to 1973 the annual decreases were assumed to be the mean of the previous 3 years of data. For both proxy measures the annual decreases in incidence rates post 2016 were assumed to be the average of the estimates in 2013, 2014, and 2015. 
 
 ```{r generate-notification-scenarios}
 ## Generate senarios based on annual decrease in notifications
@@ -726,7 +726,7 @@ In 2005, England and Wales switched from universal BCG vaccination against tuber
 
 ## Design
 
-We recreated a previous approach for estimating the impact of ending the BCG schools scheme, updating the model with parameter uncertainty and improved parameter estimates when available. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored new approaches using notification data.
+We recreated an approach for estimating the impact of ending the BCG schools scheme, updating the model with parameter uncertainty and improved parameter estimates when available. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored using notification data.
 
 ## Setting 
 
@@ -734,15 +734,15 @@ England and Wales.
 
 ## Outcome measures
 
-The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the BCG schools’ scheme.
+The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the policy change.
 
 ## Results
 
-The recreated model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates using the original model assumptions greatly underpredicted the impact of ending school-age vaccination compared to estimates using notification data. Updating the assumed annual decrease in TB incidence rates resulted in estimates that were more comparable with notification data with an annual decrease of 1.9% representing the closest estimate to the data. Using this assumption, we estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(", ", ",")` vaccines would have been required to prevent a single notification in 2004 (closest modelled date to actual policy change in 2005). If the scheme had ended in 2001, `r avg_annual_2001_1  %>% str_replace(", ", ",")` additional annual notifications would have occurred compared to if the scheme had continued.
+The model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates using the original model assumptions greatly underpredicted the impact of ending school-age vaccination compared to estimates using notification data. Updating the assumed annual decrease in TB incidence rates resulted in estimates that were more comparable with notification data with an annual decrease of 1.9% representing the closest estimate to the data. Using this assumption, we estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(", ", ",")` vaccines would have been required to prevent a single notification in 2004.
 
 ## Conclusions
 
-The previously published estimates of the impact of ending the BCG schools scheme were found to be spuriously precise once updated with parameter uncertainty. Our estimates of the impact of ending the BCG schools scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when parameter values were updated, and notification data were used. Our results highlight the importance of including uncertainty and evalating multiple scenarios when forecasting the impact of changes in vaccination policy.
+The previously published estimates of the impact of ending the BCG schools scheme were found to be spuriously precise once updated with parameter uncertainty. Our estimates of the impact of ending the BCG schools scheme were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools’ scheme was found to be greater than previously when notification data were used. Our results highlight the importance of including uncertainty and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
 
 # Supplementary Information: Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
 

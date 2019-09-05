@@ -21,7 +21,9 @@ Sam Abbott
 
 - Please include the study design in the title.
 
-**What do we think the study design is here?**
+*We have updated the title to,*
+
+*"Reassessing the evidence for universal school-age Bacillus Calmette Guerin (BCG) vaccination in England and Wales: re-evaluating and updating a modelling study"*
 
 - In the patient and public involvement statement, please clarify that patients and the public were not involved in the design or planning of the study. 
 
@@ -31,7 +33,7 @@ Sam Abbott
 
 - Please complete and include a TRIPOD checklist, ensuring that all points are included and state the page numbers where each item can be found. The checklist can be downloaded from here: http://www.equator-network.org/reporting-guidelines/tripod-statement/ 
 
-**I'm not sure this checklist is really appropriate for this paper. It is primarly designed for stastical models used for prediction.**
+*We feel that this checklist is not completely appropriate for this study as it is more focussed towards statistical models designed to be used as tools for prediction. However, we would be happy to fill in this or any other checklist if required.*
 
 ## Authors' response to Reviewer #1:
 
@@ -117,7 +119,7 @@ The idea of the approach is that information about the rate of decline of TB inc
 
 I also found it harder than it should have been to understand exactly what was different between this analysis and the original analysis, and which differences mattered most (which is important as it is the main aim of the work as I understand it). I wonder if a table would be useful detailing the differences: any implementation/modelling differences; differences in point estimates of d (both from methods and use of more recent data?); differences in parameters from literature; inclusion of uncertainty in each. I think it's important to differentiate between differences that could have been included in the analysis at the time (eg uncertainty) vs things that have emerged since (eg updated evidence on serial intervals). I also think it's important to be clear whether methods, central estimates, or uncertainty matter most from the point of view of decision-relevant changes in the evidence generated. 
 
-*To answer your previous comment we introduced a subsection of the model explanation detailing our additions to the model. The Updating model parameter estimates section of the methods contains a discussion of differences between the original and updated analysis. We have reworded this for clarity (please see the marked up paper). As you say, parameter uncertainty for incidence rates could have been included at the time but was not, whilst the updated value for the serial interval has only recently become available. This is now explicitly stated in the reworded methods paragraph.*
+*To answer your previous comment we introduced a subsection of the model explanation detailing our additions to the model. The Updating model parameter estimates and incorporating parameter uncertainty section of the methods contains a discussion of differences between the original and updated analysis. We have reworded this for clarity (please see the marked up paper). As you say, parameter uncertainty for incidence rates could have been included at the time but was not, whilst the updated value for the serial interval has only recently become available. This is now explicitly stated in the reworded methods paragraph.*
 
 *We agree that it is important to be clear which findings are relevant to policy makers and in what context. We have rewored the 4th discussion paragraph as follows in order to provide more context.*
 
