@@ -9,7 +9,7 @@ output:
 
 Dear Editor,
 
-Thank you for sending review reports for our manuscript. The reviewer’s comments were useful and have improved the paper.
+Thank you for sending review reports for our manuscript. The reviewer’s comments were useful and have greatly improved the paper.
 
 We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
 
@@ -126,8 +126,7 @@ I also found it harder than it should have been to understand exactly what was d
 
 I found the abstract confusing and not self-contained. "assess the quantitative evidence..." is rather vague and broad compared with my perception of the paper's aim. I think the fact a model was used to predict impact needs introducing, as it enters rather implicitly. It would be good to say in what ways the analysis was updated (see previous comment). "best matched" is vague. "ended in 2001" - need to have explained when it did end. Why is 2004 important? The results presented here are all about different end-dates for the vaccination policy rather than comparisons with the original analysis's predictions. "In 2016...notifications would have occurred." - under what policy change? In the conclusions: it hasn't be explained that decline in incidence rates is relevant to the modelling, it hasn't been made clear that parameters have been udated and a comparison with previous results has not been presented. In other words, the conclusion introduces new things, which is a shock, and is not supported by the rest of the abstract. 
 
-**Abstract updates still a work in progress.**
-
+*Thank you for these helpful insights - we agree that the manuscript needed revisions. We have updated the abstract based on your comments (see the marked up paper) and some of the other changes to the paper. Unfortunately, due to word limit constraints it was not possible to fully detail how the model was updated (i.e the specifics) at the same time as detailing the results and conclusions.*
 
 ### MINOR ISSUES 
 
@@ -206,13 +205,11 @@ I think that the authors have executed their stated goal well, but I am having a
 
 I think I found this paper difficult to understand because it referred so heavily to the older piece of work. I understand that this paper is updating the previous results, but it is my opinion that every scientific paper has to stand alone. Without a conventional diagram of the model structure, list of parameters with sources, and definitions of key terms, I had a hard time piecing together what was done, and I am still not sure that I fully understand. Some of this may reflect my own lack of expertise in building these kinds of models, so I realize that to a reader more in the authors’ field, this may not have been as much of an issue. However, in the interest in making this work more accessible to the general reader (and reviewer), some specific key terms and procedures that I did not find well described are listed below: 
 
-*We agree that without the context of the SI and the Sutherland et al. paper the methods section was difficult to follow.  We have greatly expanded on the explanation of the model given in the methods incorperating details from the SI and improved the discussion of the Sutherland et al. model.*
+*We agree that without the context of the SI and the Sutherland et al. paper that the methods section was difficult to follow. We have greatly expanded on the explanation of the model given in the methods, incorperating details from the SI, and improved the discussion of the Sutherland et al. model.*
 
 - Introduction paragraph 2: Does “BCG schools’ scheme” mean universal BCG for school children? What age were children vaccinated? What was coverage assumed to be – that is, were any children assumed to be unvaccinated during the old policy? After the policy change, did anyone get vaccinated (e.g. high-risk children)?
 
-*We have expanded on this in the introduction as follows, *
-
-*"In England and Wales, universal school-aged (at 13-14 years old) vaccination was introduced after a MRC trial in the 1950s estimated BCG’s effectiveness at 78% in the ethnic White UK born population.[24] The policy remained in place until 2005, when England and Wales changed to targeted vaccination of high risk neonates. The 2005 change in BCG vaccination policy was motivated by evidence of decreased transmission of TB, an increasing proportion of TB cases occurring in the non-UK born,[1] and modelling evidence that suggested stopping the BCG schools scheme would have minimal long term effects on incidence rates.[39]"*
+*We have added the age at vaccination (13-14 years old) to the introduction and also discussed vaccination policy post 2005. We have also moved a detailed description of the Sutherland et al. model from the SI into the main paper which covers coverage assumptions etc.*
 
 - Methods, paragraph 1: Who are the vaccinated and unvaccinated populations? Is vaccinated = hypothetical situation of BCG school vaccinations having continued, and unvaccinated = situation in which policy changed to stop vaccinations? Or in the two situations are different proportions of children assumed to be vaccinated and unvaccinated? 
 
@@ -232,5 +229,5 @@ I think I found this paper difficult to understand because it referred so heavil
 
 - Results: the statement is made that “We found that updating parameter values, and incorporating uncertainty, did not alter the number of vaccines required to prevent a single notification…” But changing the assumed decline in incidence rate does have a major impact. Isn’t this one of the parameters of the model? Or am I not understanding how the model works? 
 
-*We apologise for the confusion - hopefully our updates to the methods section has helped clarify the model structure. We considered the annual decrease in a scenario analysis but all other parameters were otherwise updated.*
+*We apologise for the confusion - hopefully our updates to the methods section has helped clarify the model structure. We considered the annual decrease in a scenario analysis but all other parameters were otherwise updated. It is variation in these parameters that we are referring to here.*
 
