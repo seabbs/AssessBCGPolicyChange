@@ -3,7 +3,7 @@
 #' @param scenarios A dataframe of scenarios, see the examples for a structural example.
 #' @param parameter_samples A dataframe of parameter samples, see the examples for an example.
 #' @param cores The number of cores to use, defaults to one
-#'
+#' @param ... Additional arguments passed to \code{sutherland_model}.
 #' @return A dataframe combining the scenarios, parameter samples, and model results
 #' @export
 #' @import magrittr
@@ -20,7 +20,7 @@
 #' population_data = sutherland_data, samples = 10)
 #'
 #' gen_scenario_results(scenarios, parameter_samples, cores = 1)
-gen_scenario_results <- function(scenarios, parameter_samples, cores = 1) {
+gen_scenario_results <- function(scenarios, parameter_samples, cores = 1, ...) {
 
   if (max(scenarios$sample) != max(parameter_samples$sample)) {
     stop("The number of samples in scenarios and parameter_samples must match")
@@ -35,7 +35,7 @@ gen_scenario_results <- function(scenarios, parameter_samples, cores = 1) {
                                                           list_incidence_rates = scenarios$incidence_rates,
                                                           list_percentage_year_one = scenarios$per_year_one,
                                                           list_sym_lag = scenarios$sym_lag,
-                                                          cores = cores)
+                                                          cores = cores, ...)
 
   model_sims <- tibble(output =  map(names(model_sims),
                                      ~rep(., length(flatten(model_sims))/length(names(model_sims)))) %>%

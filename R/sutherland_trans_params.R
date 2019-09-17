@@ -40,7 +40,6 @@ sutherland_trans_params <- function(Annual.TB.Decrease.Yearly = TB_decrease_as_m
     # Define the size of the first generation ---------------------------------
     Size.First.Gen <- (1 - rowMeans(Annual.TB.Decrease.Yearly)) ^ Sym.Lag
 
-
     # Define expected total notifications -------------------------------------
     Expected.Total.Sec.Note <- Size.First.Gen / (1 - Size.First.Gen)
 
