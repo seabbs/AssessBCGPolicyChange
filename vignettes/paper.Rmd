@@ -240,10 +240,12 @@ scenarios <- sutherland_scenarios %>%
 ## For each scenario and parameter sample simulate model - see ?gen_scenario_results for details
 scenario_results <- pomp::bake(file = file.path("results", prefix, "scenario_results.rda"),{
   
-  original_results <- gen_scenario_results(orig_sutherland_scenario, orig_parameter_est, cores = 1)
+  original_results <- gen_scenario_results(orig_sutherland_scenario, orig_parameter_est, 
+                                           cores = 1, update_chains = FALSE)
   scenario_results <- gen_scenario_results(scenarios, 
                                          parameter_samples, 
-                                         cores = parallel::detectCores())
+                                         cores = parallel::detectCores(),
+                                         update_chains = TRUE)
   
   scenario_results <- original_results %>% 
     bind_rows(scenario_results)

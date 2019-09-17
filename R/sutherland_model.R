@@ -16,6 +16,7 @@
 #' \code{\link[AssessBCGPolicyChange]{sutherland_trans_params}}.
 #' @param Sym.Lag Numeric, the generation time between infection and symtoms. Must be smaller or equal to the \code{Cohort.Length}.
 #' Defaults to \code{\link[AssessBCGPolicyChange]{sutherland_gen_time}}.
+#' @param update_chains Logical, defaults to \code{FALSE}. Should the transmission chain model be updated or used as found in Sutherland et al.
 #' @return A list of tables reproducing the results presented in Sutherland et al. The final table estimates the total number of additional
 #' cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length.
 #' @export
@@ -27,14 +28,15 @@
 sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherland_incidence_rates, Rates.Per = 100000,
                              Cohort.Length = 5, Data.start = 1969,
                              Annual.TB.Decrease.Yearly = TB_decrease_as_matrix(sutherland_TB_decrease),
-                             Percentage.Year.One = NULL, trans_params = sutherland_trans_params(), Sym.Lag = 2){
+                             Percentage.Year.One = NULL, trans_params = sutherland_trans_params(), Sym.Lag = 2,
+                             update_chains = FALSE){
 
   ## Define variables
   Cohort <- Data[["Cohort"]]
   Cohort.Ranges <- Data[["Cohort.Ranges"]]
   sim_year <- as.numeric(rownames(Annual.TB.Decrease.Yearly))
   Projected.Cohort <- (max(sim_year) - min(sim_year) + 1) / Cohort.Length
-  trans_params <- sutherland_trans_params(Annual.TB.Decrease.Yearly, Sym.Lag = Sym.Lag)
+  trans_params <- sutherland_trans_params(Annual.TB.Decrease.Yearly, Sym.Lag = Sym.Lag, update_chains = update_chains)
   Expected.Total.Sec.Note <- trans_params$Expected.Total.Sec.Note
   Size.First.Gen <- trans_params$Size.First.Gen
   Avg.Int.All.Sec <- trans_params$Avg.Int.All.Sec
@@ -235,7 +237,7 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
   ########################################################## Total notifications if scheme continues
 
 
-  Length <-1
+  Length <- 1
 
   Total.Note.Subpop = function(Est.Risk, Proj.Pop, Length){
 
@@ -248,12 +250,12 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
 
     Total.Note.Subpop <- sapply(1:(nrow(Note.Subpop)-2*Length), function(i){
 
-      M <- Note.Subpop[i,3]+Note.Subpop[i+Length,2]+Note.Subpop[i+2*Length,1]
+      M <- Note.Subpop[i,3] + Note.Subpop[i + Length, 2] + Note.Subpop[i + 2 * Length, 1]
 
     })
-    names(Total.Note.Subpop) <- as.character(tail(Est.Note.Prev.Age[,1],n=(Projected.Cohort-2)*Length)+4)
+    names(Total.Note.Subpop) <- as.character(tail(Est.Note.Prev.Age[, 1],n = (Projected.Cohort - 2) * Length) + 4)
 
-    Round.Total.Note.Subpop <- round(Total.Note.Subpop, digits=0)
+    Round.Total.Note.Subpop <- round(Total.Note.Subpop, digits = 0)
     return(Round.Total.Note.Subpop)
   }
 
