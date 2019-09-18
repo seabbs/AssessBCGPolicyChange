@@ -15,7 +15,8 @@ Imports:
     matrixStats,
     doParallel,
     purrr,
-    foreach
+    foreach,
+    forcats
 Suggests:
     testthat,
     devtools,

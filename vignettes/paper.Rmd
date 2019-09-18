@@ -604,7 +604,7 @@ avg_annual_not_prev <- avg_annual_not_prev %>%
 ```{r annual_nots-mw}
 pomp::stew(file = file.path("results", prefix, "annual_nots-mw.rda"), {
   avg_annual_not_prev_mw_1 <- avg_annual_not_prev %>% 
-  filter(!(years %in% "2026")) %>% 
+  filter(!(years %in% "2026"), !(scenario %in% "0% decrease")) %>% 
   add_mann_whitney_test(metric = "annual_add_nots", group = "years", baseline = `1.9% decrease`)
 
 a_not_vs_1_2001 <- avg_annual_not_prev_mw_1 %>% 
@@ -616,7 +616,7 @@ a_inc_vs_1_2001 <- avg_annual_not_prev_mw_1 %>%
   pull(pretty_p)
 
 avg_annual_not_prev_mw_9 <- avg_annual_not_prev %>% 
-  filter(!(years %in% "2026")) %>%
+  filter(!(years %in% "2026"), !(scenario %in% "0% decrease")) %>%
   add_mann_whitney_test(metric = "annual_add_nots", group = "years", baseline = `9% decrease`)
 })
 ```
@@ -624,7 +624,8 @@ avg_annual_not_prev_mw_9 <- avg_annual_not_prev %>%
 ```{r annual_nots_tab}
 pomp::stew(file = file.path("results", prefix, "annual_nots_tab.rda"), {
   avg_annual_not_tab <- avg_annual_not_prev %>% 
-  make_results_table(group = c("scenario", "years"), metric = annual_add_nots)
+    filter(!(scenario %in% "0% decrease")) %>% 
+    make_results_table(group = c("scenario", "years"), metric = annual_add_nots)
 
 
 ## 2006 summary measures
@@ -670,16 +671,16 @@ We found that updating parameter values, and incorporating uncertainty, did not 
 
 ```{r graph-avg-add-nots, fig.cap = pretty_figref("boxplot_annual_not_prev", "Annual additional notifications in 15-29 year olds from stopping the BCG schools scheme in 2001, 2006, 2011, and 2016 until 2028. The years presented were dictated by the 5 year timestep of the model. The percentage annual decrease scenarios considered were based on those considered by the JVCI BCG subgroup, with the addition of a scenario using aggregate notification data and a scenario using estimates of age-specific incidence rates in the UK born. Each boxplot summarises the output of 10,000 model simulations for each scenario. Outliers have been omitted for clarity."), dpi = 330}
 avg_annual_not_prev %>% 
-  filter(years > 2000, years < 2021, !(scenario %in% "9% decrease (original parameters)")) %>% 
+  filter(years > 2000, years < 2021, !(scenario %in% "0% decrease")) %>% 
   rename(Scenario = scenario) %>% 
   ggplot(aes(x = Scenario, y = annual_add_nots, col = Scenario)) +
   geom_boxplot(outlier.shape = NA, width = .6, position = "dodge") +
   coord_flip() +
   scale_colour_viridis_d(end = 0.9, direction = -1) +
   labs(y = "Annual additional notifications (log scale)") +
-  scale_y_log10(breaks = c(2, 5, 10, 20, 40, 100, 300, 1200),
+  scale_y_log10(breaks = c(10, 50, 100, 250, 500, 1000, 2500, 8000),
                 labels = comma,
-                limits = c(2, 1200)) +
+                limits = c(10, 10000)) +
   theme_minimal() +
   theme(legend.position = "none") +
   facet_wrap(~years, scale = "fixed")
@@ -775,9 +776,11 @@ prepare_results_table <- function(df = NULL, year_new = NULL) {
 
   tab <- df %>% 
   select(scenario, year, sum) %>% 
+  mutate(scenario = scenario %>% 
+           forcats::fct_rev()) %>% 
+  arrange(scenario) %>% 
   spread(key = scenario, value = sum) %>% 
-  select(year, `9% decrease (original parameters)`, `9% decrease`, `3.9% decrease`, `1.9% decrease`,
-         `0% decrease`, Notifications, `Incidence Rates`) %>% 
+  select(year, contains("decrease"), Notifications, `Incidence Rates`) %>% 
     rename(!!year_new := year)
   
   return(tab)
@@ -797,7 +800,7 @@ prepare_results_table(year_new = "Year of Vaccination") %T>%
 ```{r tab-annual_nots_prevented}
 avg_annual_not_tab %>% 
   rename(year = years) %>% 
-  filter(!(year %in% "2026")) %>% 
+  filter(!(year %in% "2026"), !(scenario %in% "0% decrease")) %>% 
 prepare_results_table(year_new = "Year Ending Scheme") %T>% 
   save_formated("tab-annual_nots_prevented") %>% 
   pretty_table(label = "annual_prevent_tab",
