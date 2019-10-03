@@ -40,7 +40,8 @@ Defaults to \code{\link[AssessBCGPolicyChange]{sutherland_gen_time}}.}
 }
 \value{
 A list of tables reproducing the results presented in Sutherland et al. The final table estimates the total number of additional
-cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length.
+cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length. In addition the
+primary additional impacts and total secondary notifications arising from each year are also output based on paper revisions.
 }
 \description{
 Sutherland et al. Model to Estimate Impact of Ending the BCG School Scheme

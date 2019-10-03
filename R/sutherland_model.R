@@ -18,7 +18,8 @@
 #' Defaults to \code{\link[AssessBCGPolicyChange]{sutherland_gen_time}}.
 #' @param update_chains Logical, defaults to \code{FALSE}. Should the transmission chain model be updated or used as found in Sutherland et al.
 #' @return A list of tables reproducing the results presented in Sutherland et al. The final table estimates the total number of additional
-#' cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length.
+#' cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length. In addition the
+#' primary additional impacts and total secondary notifications arising from each year are also output based on paper revisions.
 #' @export
 #' @importFrom matrixStats colProds
 #' @examples
@@ -279,7 +280,6 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
   Round.Total.Note.Year.Inelg <- Total.Note.Subpop(Est.Inelg.Risk,Proj.No.Inelg, Length)
 
 
-
   ################### Total Notifications if scheme continues
 
   Total.Note.Year.Full <- Round.Total.Note.Year.Vac.Rec + Round.Total.Note.Year.Vac.Unrec + Round.Total.Note.Year.Tub.Pos + Round.Total.Note.Year.Inelg
@@ -289,7 +289,6 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
 
   Stan.Year <- names(Total.Note.Year.Full)[1:(length(names(Total.Note.Year.Full)) + (1 - Length))]
   Total.Effects <- Round.Primary.Additional.Note[,Stan.Year] + Round.Secondary.Additional.Note[,Stan.Year] + dummy.Total.Note.Year.Full[,Stan.Year]
-
 
 
   #################### Total additional notifications from ending the scheme in selected years
@@ -302,11 +301,40 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
   Output <- list(Est.TB.Risk.Round, Est.Note.Prev.Round, Round.Note.Prev.Year, Round.Total.Note.Year,
                 Total.Note.Year.Full, Round.Primary.Additional.Note, Round.Secondary.Additional.Note,p, Total.Secondary.Note.All.Time,
                 Total.Effects, total_additional_notifications, total_add_nots_all_time)
-  names(Output) <- c('Table 2 - Estimated risk of developing notified TB', 'Table 3 - Estimated of no. of TB notifications prevented', 'Table 4 - Estimated no. of TB notifications prevented by Schools BCG scheme'
-                     , 'Table 4 - Total notifcations prevented each year', 'Table 5 - Total notifications if the scheme continues', 'Table 5 - Primary additional notifications',
+  names(Output) <- c('Table 2 - Estimated risk of developing notified TB', 'Table 3 - Estimated of no. of TB notifications prevented',
+                     'Table 4 - Estimated no. of TB notifications prevented by Schools BCG scheme', 'Table 4 - Total notifcations prevented each year',
+                     'Table 5 - Total notifications if the scheme continues', 'Table 5 - Primary additional notifications',
                      'Table 5 - Secondary additional notifications','Table 5 - Secondary additional notifcations reduced to Sutherland for clarity',
                      'Table 5 - Total secondary notifications all time', 'Table 5 - Total Effects of ending the schools BCG scheme',
                      "Total additional notifications", "Total additional notifications all time")
+
+
+
+# Revision additions ------------------------------------------------------
+
+
+
+  # Primary additional notifications ----------------------------------------
+
+  ## Modification so that only primary impacts are returned.
+  total_primary_additional <- rowSums(Round.Primary.Additional.Note[,Stan.Year]) * Cohort.Length
+
+  # Modified Sutherland secondary impacts -----------------------------------
+
+   ## Based on previous allocation model (Line 214)
+   ## Does not attempt to allocate cases in time. (so is a summary measure only).
+
+   total_secondary_additional <- t(t(Primary.Additional.Note)*Expected.Total.Sec.Note[index]) %>%
+    rowSums() %>%
+    round()
+  {. * Cohort.Length}
+
+
+
+# Add to original output --------------------------------------------------
+
+  Output$total_primary_additional <- total_primary_additional
+  Output$total_secondary_additional <-total_secondary_additional
 
   return(Output)
 }

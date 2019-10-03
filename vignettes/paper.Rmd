@@ -147,13 +147,13 @@ $$ T=x+x^2+x^3+ . . = \frac{x}{1-x} $$
 
 $$ Z = \frac{xz + x^{2}2z + x^{3}3z + . .}{x+x^2+x^3+ . . }= \frac{z}{1-x} $$
 
-#### Transmission chain model updates and additions
+#### Updating the transmission chain model
 
-Sutherland et al. incorrectly defined the total expected number of secondary notifications ($T$) as the initial generation size ($x$). To correct this we updated 1. to the following, 
+Sutherland et al. incorrectly defined the total expected number of secondary notifications ($T$) as the initial generation size ($x$). To correct this we updated 1. to the following in our updated scenarios, 
 
 $$ x = (1-d)^z < 1 $$
 
-Implementing the model also required several assumptions not detailed in [@Sutherland1989]. Firstly, as incidence rates for those ineligible for the BCG schools scheme are not published, We assumed that they were equal to those in the unvaccinated population. In addition, in order to reproduce the distribution of cases over time reported in Sutherland et al. We introduced an additional model step and parameter; the percentage of secondary cases due to a primary case in the first year after activation ($f$). The distribution of secondary cases ($N$) was then modelled by first estimating the number of secondary cases that occurred in the current year and then estimating how many secondary cases occurred 5 years later (due to the 5 year timestep). This iterative process can be summarised as follows,
+Implementing the model also required several assumptions not detailed in [@Sutherland1989]. Firstly, as incidence rates for those ineligible for the BCG schools scheme are not published, We assumed that they were equal to those in the unvaccinated population. In addition, in order to reproduce the distribution of cases over time reported in Sutherland et al. we introduced an additional model step and parameter; the percentage of secondary cases due to a primary case in the first year after activation ($f$). The distribution of secondary cases ($N$) was then modelled by first estimating the number of secondary cases that occurred in the current year and then estimating how many secondary cases occurred 5 years later (due to the 5 year timestep). This iterative process can be summarised as follows,
 
 $$ N^{Current} = P T  f  x $$
 $$ N^{Projected} = (PT - N^{Current})(1 - d)^{L-Z} $$ 
@@ -161,7 +161,7 @@ $$ N_i^{Total} = N^{Current}_i + N^{Projected}_{i-1} $$
 
 Where $P$ is the number of primary notifications, $i$ is the year of interest, $N^{Current}$ is the number of secondary cases in the current  year, $N^{Projected}$ is the number of secondary cases in the subsequent timestep, and $L$ is the model timestep (set to be 5 years).
 
-We fitted this parameter using least squares to the original estimates of the total notifications due to ending the scheme under several scenarios, for several years. We validated the fitted model by comparing the results with those from the original implementation using the mean absolute percentage error, normalised by the original estimate, as the performance metric.
+We fitted this parameter using least squares to the original estimates of the total notifications due to ending the scheme under several scenarios, for several years. We validated the fitted model by comparing the results with those from the original implementation using the mean absolute percentage error, normalised by the original estimate, as the performance metric. This approach is only valid when using the original approach from [@Sutherland1989] and so is only used here for validation purposes.
 
 ```{r generate-sutherland-scenarios}
 ## Generate percentage annual change scenarios based on those used at JVCI - see ?gen_annual_change_scenarios for details
@@ -230,7 +230,7 @@ inc_rates_scenarios <- pomp::bake(file = file.path("results", prefix, "inc_rates
 
 ## Statistical analysis
 
-For each scenario, we ran the model until 2028 with 10,000 parameter samples. We tested the difference between scenarios using the Mann-Whitney test for both the number of vaccines needed to prevent a single case in 15 years after vaccination for a cohort aged 13-14 years old at vaccination and the total number of additional notifications caused by ending the BCG schools scheme. As in [@Sutherland1989] a 15 year time horizon was used with 5 year intervals. The year closest to the year of the change in vaccination policy (2005), which had model estimates, was used as the baseline. 
+For each scenario, we ran the model until 2028 with 10,000 parameter samples. We tested the difference between scenarios using the Mann-Whitney test for: the number of vaccines needed to prevent a single case in 15 years after vaccination for a cohort aged 13-14 years old at vaccination; the total number of primary additional notifications caused by ending the BCG schools scheme; and the total number of secondary notifications caused by ending the BCG schools scheme. As in [@Sutherland1989] a 15 year time horizon was used with 5 year intervals. The year closest to the year of the change in vaccination policy (2005), which had model estimates, was used as the baseline. 
 
 ```{r simulate-model}
 ## Bind all scenarios together
@@ -330,7 +330,7 @@ comparision_tab <- comparision_tab[, order(colnames(comparision_tab))] %>%
 })
 ```
 
-Our model produced results that were comparable with those from [@Sutherland1989] (`r pretty_suptabref("model_validation", inline = TRUE)`) when the original transmission model was used. When estimating the total notifications from ending the BCG schools scheme at different times in ethnic White UK born adults aged 15-29 years old in England and Wales our model had a median absolute error of `r median_lll_hhh_error` and a maximum absolute error of `r {pretty_max}` when compared to [@Sutherland1989].
+Our model produced results that were comparable with those from [@Sutherland1989] (`r pretty_suptabref("model_validation", inline = TRUE)`) when the original transmission model and assumptions were used. When estimating the total notifications from ending the BCG schools scheme at different times in ethnic White UK born adults aged 15-29 years old in England and Wales our model had a median absolute error of `r median_lll_hhh_error` and a maximum absolute error of `r {pretty_max}` when compared to [@Sutherland1989].
 
 ## Annual change in TB incidence rates
 
@@ -589,16 +589,19 @@ vaccines_to_prevent %>%
 ```{r extract total additional notifications and tidy}
 avg_annual_not_prev <- pomp::bake(file = file.path("results", prefix, "total_not_prev.rda"),{
 avg_annual_not_prev <- scenario_results %>% 
-  select(scenario, sample, `Total additional notifications all time`) %>% 
-  mutate(tb_nots_prevented_df = `Total additional notifications all time` %>% 
-           map(~tibble(years = names(.), add_nots = .))
+  select(scenario, sample, total_primary_additional, total_secondary_additional) %>% 
+  mutate(primary_additional = total_primary_additional %>% 
+           map(~tibble(years = names(.), primary_additional = .)),
+         secondary_additional = total_secondary_additional %>% 
+           map(~tibble(years = names(.), secondary_additional = .))
          ) %>% 
   unnest() %>% 
+  gather(key = "type", value = "add_nots", primary_additional, secondary_additional) %>% 
   mutate(annual_add_nots = add_nots / ((1969 + 5 * cohorts_to_sim -1 ) - as.numeric(years)))
 })
 
 avg_annual_not_prev <- avg_annual_not_prev %>% 
-  select(scenario, sample, annual_add_nots, years)
+  select(scenario, sample, annual_add_nots, type, years)
 ```
 
 ```{r annual_nots-mw}
@@ -671,7 +674,7 @@ We found that updating parameter values, and incorporating uncertainty, did not 
 
 ```{r graph-avg-add-nots, fig.cap = pretty_figref("boxplot_annual_not_prev", "Annual additional notifications in 15-29 year olds from stopping the BCG schools scheme in 2001, 2006, 2011, and 2016 until 2028. The years presented were dictated by the 5 year timestep of the model. The percentage annual decrease scenarios considered were based on those considered by the JVCI BCG subgroup, with the addition of a scenario using aggregate notification data and a scenario using estimates of age-specific incidence rates in the UK born. Each boxplot summarises the output of 10,000 model simulations for each scenario. Outliers have been omitted for clarity."), dpi = 330}
 avg_annual_not_prev %>% 
-  filter(years > 2000, years < 2021, !(scenario %in% "0% decrease")) %>% 
+  filter(years > 2001, years < 2016, !(scenario %in% "0% decrease")) %>% 
   rename(Scenario = scenario) %>% 
   ggplot(aes(x = Scenario, y = annual_add_nots, col = Scenario)) +
   geom_boxplot(outlier.shape = NA, width = .6, position = "dodge") +
@@ -683,7 +686,7 @@ avg_annual_not_prev %>%
                 limits = c(10, 10000)) +
   theme_minimal() +
   theme(legend.position = "none") +
-  facet_wrap(~years, scale = "fixed")
+  facet_grid(years ~ type, scale = "fixed")
 ```
 
 # Discussion
