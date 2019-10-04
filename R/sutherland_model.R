@@ -326,8 +326,8 @@ sutherland_model <- function(Data = sutherland_data, incidence_rates = sutherlan
 
    total_secondary_additional <- t(t(Primary.Additional.Note)*Expected.Total.Sec.Note[index]) %>%
     rowSums() %>%
-    round()
-  {. * Cohort.Length}
+    round() %>%
+    {. * Cohort.Length}
 
 
 
