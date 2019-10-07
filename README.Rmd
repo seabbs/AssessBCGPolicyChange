@@ -19,31 +19,29 @@ knitr::opts_chunk$set(
 
 [Sam Abbott](https://www.samabbott.co.uk), Hannah Christensen, Ellen Brooks-Pollock
 
-## Abstract 
-
-### Objectives
-
+## Objectives
+ 
 In 2005, England and Wales switched from universal BCG vaccination against tuberculosis (TB) disease for school-age children to targeted vaccination of neonates. We aimed to recreate and re-evaluate a previously published model, the results of which informed this policy change.
 
-### Design
+## Design
 
-We recreated an approach for estimating the impact of ending the BCG schools scheme, updating the model with parameter uncertainty and improved parameter estimates where possible. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored alternative scenarios using notification data.
+We recreated an approach for estimating the impact of ending the BCG schools scheme, correcting a methodological flaw in the model, updating the model with parameter uncertainty, and improving parameter estimates where possible. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored alternative scenarios using notification data.
 
-### Setting 
+## Setting
 
 England and Wales.
 
-### Outcome measures
+## Outcome measures
 
 The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the policy change.
 
-### Results
+## Results
 
-The model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates using the original assumptions greatly underpredicted the impact of ending school-age vaccination compared to estimates using notification data. Updating the assumed annual decrease in TB incidence rates resulted in estimates that were more comparable with notification data with an annual decrease of 1.9% representing the closest estimate to the data. Using this assumption, we estimate that 1600 (2.5,97.5% Quantiles (Q): 1300, 2100) vaccines would have been required to prevent a single notification in 2004.
+The original model greatly underestimated the impact of ending school-age vaccination compared to our updated, corrected, model. The model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates were most comparable to notification data when an annual decrease in TB incidence rates of 1.9% was used. Using this assumption, we estimate that 1600 (2.5,97.5% Quantiles (Q): 1300, 2000) vaccines would have been required to prevent a single notification in 2004.
 
-### Conclusions
+## Conclusions
 
-The previously published estimates of the impact of ending the BCG schools scheme were found to be spuriously precise once updated with parameter uncertainty. Our estimates of the impact of ending school-age vaccination were highly sensitive to the annual decrease in incidence rates. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of including uncertainty and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
+The previously published model was found to contain a methodological flaw which, once corrected, resulted in a large increase in the estimated impact of ending the BCG schools scheme. The original approach was also found to be spuriously precise once updated with parameter uncertainty. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of independent evaluations of modelling evidence, including uncertainty, and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
 
 ## Reproducibility
 
