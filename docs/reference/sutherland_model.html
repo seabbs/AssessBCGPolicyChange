@@ -123,7 +123,7 @@
   <span class='kw'>Cohort.Length</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>Data.start</span> <span class='kw'>=</span> <span class='fl'>1969</span>,
   <span class='kw'>Annual.TB.Decrease.Yearly</span> <span class='kw'>=</span> <span class='fu'><a href='TB_decrease_as_matrix.html'>TB_decrease_as_matrix</a></span>(<span class='no'>sutherland_TB_decrease</span>),
   <span class='kw'>Percentage.Year.One</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trans_params</span> <span class='kw'>=</span> <span class='fu'><a href='sutherland_trans_params.html'>sutherland_trans_params</a></span>(),
-  <span class='kw'>Sym.Lag</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+  <span class='kw'>Sym.Lag</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>update_chains</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,12 +170,17 @@ the size of the first generation, and the average interval between a primary cas
       <td><p>Numeric, the generation time between infection and symtoms. Must be smaller or equal to the <code>Cohort.Length</code>.
 Defaults to <code><a href='sutherland_gen_time.html'>sutherland_gen_time</a></code>.</p></td>
     </tr>
+    <tr>
+      <th>update_chains</th>
+      <td><p>Logical, defaults to <code>FALSE</code>. Should the transmission chain model be updated or used as found in Sutherland et al.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of tables reproducing the results presented in Sutherland et al. The final table estimates the total number of additional
-cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length.</p>
+cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length. In addition the
+primary additional impacts and total secondary notifications arising from each year are also output based on paper revisions.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -295,6 +300,14 @@ cases from ending the shcheme. In order to provide a complete estimate each 5 ye
 #&gt; $`Total additional notifications all time`
 #&gt;  1971  1976  1981  1986  1991  1996  2001  2006  2011 
 #&gt; 11295  7855  4220  2215  1240   595   220    50     0 
+#&gt; 
+#&gt; $total_primary_additional
+#&gt; 1971 1976 1981 1986 1991 1996 2001 2006 2011 
+#&gt; 6160 4485 2425 1290  740  375  150   40    0 
+#&gt; 
+#&gt; $total_secondary_additional
+#&gt; 1971 1976 1981 1986 1991 1996 2001 2006 2011 
+#&gt; 5960 3720 2010 1075  615  310  125   30    0 
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
