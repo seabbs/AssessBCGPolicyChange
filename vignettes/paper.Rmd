@@ -68,6 +68,30 @@ Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, Univer
 
 **Words:** *Title:* 21 *Abstract:* 298 *Paper:* 3925
 
+# Abstract
+
+## Objectives
+
+In 2005, England and Wales switched from universal BCG vaccination against tuberculosis (TB) disease for school-age children to targeted vaccination of neonates. We aimed to recreate and re-evaluate a previously published model, the results of which informed this policy change.
+
+## Design
+
+We recreated an approach for estimating the impact of ending the BCG schools scheme, correcting a methodological flaw in the model, updating the model with parameter uncertainty, and improving parameter estimates where possible. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored alternative scenarios using notification data.
+
+## Setting 
+
+England and Wales.
+
+## Outcome measures
+
+The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the policy change.
+
+## Results *Copy from bottom*
+
+## Conclusions
+
+The previously published model was found to contain a methodological flaw which, once corrected, resulted in a large increase in the estimated impact of ending the BCG schools scheme. The original approach was also found to be spuriously precise once updated with parameter uncertainty. The impact of ending the BCG schools scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of independent evaluations of modelling evidence, including uncertainty, and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
+
 # What is already known on this subject
 
 - Targeted Bacillus Calmette Guerin (BCG) vaccination against TB is recommended in  low incidence countries over universal vaccination.
@@ -89,21 +113,21 @@ Ellen Brooks-Pollock, Bristol Medical School: Population Health Sciences, Univer
 
 # Strengths and limitations of this study
 
--	This study reassesses a key piece of the quantitative evidence used to motivate the change in BCG vaccination policy in 2005, correcting a methodological flaw in the original model.
+-	This study reevaluates a key piece of the quantitative evidence used to motivate the change in BCG vaccination policy in 2005, correcting a methodological flaw in the original model.
 
 -	The inclusion of parameter uncertainty, and measurement error, allowed the uncertainty in the final estimates to be presented. Previously published estimates may have been spuriously precise.
 
-- As this study used a historcal approach the model used is not the accurate method for assessing the impact of ending the BCG schools scheme. However, it provides an estimate that is based on the available data and on the framework used to inform policy making. This allowed the strength of some the quantitative evidence used in the decision-making process to be assessed. 
+- As this study used a historical approach the model used is not the accurate method for assessing the impact of ending the BCG schools scheme. However, it provides an estimate that is based on the available data and on the framework used to inform policy making. This allowed the strength of some the quantitative evidence used in the decision-making process to be assessed. 
 
 - A weakness of the modelling framework used in this study is that it did not include the whole population or age groups outside those directly affected by vaccination. The exclusion of these factors means that our results are conservative. 
 
-- This study only considered the impact of ending the BCG schools’ scheme and not the impact of the introduction of the targeted neonatal vaccination program. This should be considered when evaluating the change in policy as a whole.
+- This study only considered the impact of ending the BCG schools scheme and not the impact of the introduction of the targeted neonatal vaccination program. This should be considered when evaluating the change in policy as a whole.
 
 # Introduction
 
 The Bacillus Calmette–Guérin (BCG) vaccine remains the only licensed vaccine for use against Tuberculosis (TB), although its use globally is controversial due to evidence of variable effectiveness,[@Mangtani2014a] and waning protection 10-15 years after vaccination.[@Abubakar2013] Global usage of the BCG varies between no vaccination, universal vaccination, and high-risk group vaccination and may target either neonates or school-aged children.[@Pilger2012b; @Zwerling2011a] The World Health Organization (WHO) recommends vaccination for all neonates as early as possible after birth in high burden settings, with vaccination in low burden settings being dependent on the country specific epidemiology of TB.[@WHO2017] This recommendation is based on the strong evidence that the BCG is highly protective in children,[@Rodrigues1993; @Colditz1994] whilst its effectiveness has been shown to vary with latitude when given later in life.[@Mangtani2014] 
 
-In England and Wales, universal school-aged (at 13-14 years old) vaccination was introduced after a MRC trial in the 1950s estimated BCG's effectiveness at 80% in the ethnic White UK born population.[@Hart1972] The policy remained in place until 2005, when England and Wales changed to targeted vaccination of high-risk neonates. The 2005 change in BCG vaccination policy was motivated by evidence of decreased transmission of TB, an increasing proportion of TB cases occurring in the non-UK born,[@PHE2017] and modelling evidence that suggested stopping the BCG schools scheme would have minimal long term effects on incidence rates.[@Sutherland1989] Due to the complex nature of both TB and the BCG vaccine, the ongoing impact of this change in policy is hard to directly estimate, with decision makers relying on expert opinion, evidence from surveillance data, and insight from modelling studies.  
+In England and Wales, universal school-aged (at 13-14 years old) vaccination (hereafter referred to as the BCG schools scheme) was introduced after a MRC trial in the 1950s estimated BCG's effectiveness at 80% in the ethnic White UK born population.[@Hart1972] The policy remained in place until 2005, when England and Wales changed to targeted vaccination of high-risk neonates. The 2005 change in BCG vaccination policy was motivated by evidence of decreased transmission of TB, an increasing proportion of TB cases occurring in the non-UK born,[@PHE2017] and modelling evidence that suggested stopping the BCG schools scheme would have minimal long term effects on incidence rates.[@Sutherland1989] Due to the complex nature of both TB and the BCG vaccine, the ongoing impact of this change in policy is hard to directly estimate, with decision makers relying on expert opinion, evidence from surveillance data, and insight from modelling studies.  
 
 In 1987, an assessment of the school-age vaccination program was carried out in England and Wales.[@Sutherland1989] This study was used, combined with a sensitivity analysis of notification rates, as supporting evidence by the Joint Committee on Vaccination and Immunisation (JVCI) BCG subgroup for the change in vaccination policy.[@JVCIBCG2002; @JVCIBCG2003] This paper aims to re-evaluate this modelling, and re-estimate the predicted impact of stopping the schools scheme. Re-evaluating this work allows for the strength of the evidence used in decision making to be assessed and may highlight any issues with the approach used.
 
@@ -111,25 +135,25 @@ In 1987, an assessment of the school-age vaccination program was carried out in 
 
 ## Modelling the impact of ending the BCG schools scheme
 
-We implemented, and updated, Sutherland et al.’s model for estimating the impact of ending the BCG schools scheme.[@Sutherland1989] This model was based on data from TB notification surveys conducted in 1973, 1978, and 1983.[@Sutherland1987a] These were used to estimate incidence rates, stratified by BCG vaccination status, in the ethnic White UK born population of England and Wales aged 15-19 years old, 20-24 years old and 25-29 years old. Future incidence rates were forecast by assuming an annual decrease in incidence rates, which was based on historic trends.[@Sutherland1989; @Springett1988] Primary impacts from ending the schools scheme, including the number of vaccines required to prevent a single notification, were estimated by calculating the difference in incidence rates between the vaccinated and unvaccinated populations. Additional notifications from TB transmission were then calculated using a transmission chain model. These estimates were then used, combined with the primary impact estimates, to calculate the number of annual additional notifications due to ending BCG vaccination. Based on data availability the model used a 5 year timestep.
+We implemented, and updated, Sutherland et al.’s model for estimating the impact of ending the BCG schools scheme, which is outlined briefly below.[@Sutherland1989] This model was based on data from TB notification surveys conducted in 1973, 1978, and 1983.[@Sutherland1987a] These were used to estimate incidence rates, stratified by BCG vaccination status, in the ethnic White UK born population of England and Wales aged 15-19 years old, 20-24 years old and 25-29 years old. Future incidence rates were forecast by assuming an annual decrease in incidence rates, which was based on historic trends.[@Sutherland1989; @Springett1988] Primary impacts from ending the schools scheme, including the number of vaccines required to prevent a single notification, were estimated by calculating the difference in incidence rates between the vaccinated and unvaccinated populations. Additional notifications from TB transmission were then calculated using a transmission chain model and combined with the primary impact estimates, to calculate the number of annual additional notifications due to ending BCG vaccination. Based on data availability the model used a 5-year timestep.
 
 ### Estimating notification rates
 
-The effectiveness of the BCG vaccine was originally estimated by an MRC trial in 1953 at 78% in the United Kingdom.[@Hart1972] As a follow up to this trial members of the MRC bio-statistics unit conducted a series of notification surveys attempting to ascertain any change in effectiveness, as well as acting as an estimate of notification rates across different demographics.[@Sutherland1987a] Notification surveys were carried out at 5 year intervals in 1973, 1978 and 1983; looking at those aged 15-24 years old in England and Wales. For the 1983 survey records of BCG status, Tuberculin status and ethnicity were extracted from the records of notifying physicians and the records of the local health and education authorities. Totals, across the study period, were then aggregated for the following groups: Tuberculin negative and BCG positive, Tuberculin negative and BCG negative, Tuberculin positive and not vaccinated and those who did not participate. These totals were then combined with the population estimates for each cohort at 13 years of age to estimate the ethnic make up of the population, and to construct notification rates for each category. Data were drawn from a range of sources including: Office of National Statistics data; annual local authority returns for total tuberculin test results; BCG vaccinations in the schools scheme; and the Labour force survey (1983).
+The effectiveness of the BCG vaccine was originally estimated by an MRC trial in 1953 at 78% in the United Kingdom.[@Hart1972] As a follow up to this trial members of the MRC bio-statistics unit conducted a series of notification surveys attempting to ascertain any change in effectiveness, as well as acting as an estimate of notification rates across different demographics.[@Sutherland1987a] Surveys of those aged 15-24 years were carried out at 5-year intervals in 1973, 1978 and 1983 in England and Wales. For the 1983 survey records of BCG status, Tuberculin status and ethnicity were extracted from the records of notifying physicians and the records of the local health and education authorities. Total notifications across the study period were then aggregated for the following groups: Tuberculin negative and BCG vaccinated, Tuberculin negative and BCG unvaccinated, Tuberculin positive and not vaccinated and those who did not participate. These totals were then combined with the population estimates for each cohort at 13 years of age to estimate the ethnic make up of the population, and to construct notification rates for each category. Data were drawn from a range of sources including: Office of National Statistics data; annual local authority returns for total tuberculin test results; BCG vaccinations in the schools scheme; and the Labour force survey (1983).
 
-For 1983 this corresponded with 874 notifications in the ethnic White UK born in England and Wales, between 15-24, with participation at 80%. As the number of Tuberculin negative subjects not given BCG was unreported this was estimated at 1.9% of those vaccinated with the BCG. Allowances were also made for those already vaccinated prior to the schools scheme. See [@Sutherland1987a] for full details of the survey construction and the additional assumptions used to give similar estimates for both the 1973 and 1978 surveys. The findings of these surveys were as follows: in the ethnic White population notification rates had fallen by an annual average of 9% and BCG efficacy had remained high.[@Sutherland1989; @Springett1988]
+For 1983 this corresponded to 874 notifications in 15-24 year old ethnic White UK born persons in England and Wales; survey participation was 80%. As the number of Tuberculin negative subjects not given BCG was unreported this was estimated at 1.9% of those vaccinated with the BCG.[@Sutherland1987a] See [@Sutherland1987a] for full details of the survey and the additional assumptions used to give similar estimates for both the 1973 and 1978 surveys. The findings of these surveys were as follows: in the ethnic White population notification rates had fallen by an annual average of 9% and BCG efficacy had remained high.[@Sutherland1989; @Springett1988]
 
-Evidence suggests that the BCG vaccine has a high efficacy for at least the first 15 years after vaccination, therefore Sutherland et al. extrapolated from the data on the 20-24 cohort to a theoretical 25-29 year old cohort. Data on the notifications for the first 6 months of the 1983 survey was available and this was then scaled using the ratio of notifications from this age group against the total number of notifications recorded in that year. Population estimates from the 20-24 cohort were adjusted for all causes of mortality (0.34%). Migration was ignored. The tuberculin positive cohort had a sharp decline in the previous two cohorts, therefore it was assumed that this continued. Lastly, the efficacy was estimated as being that seen in the 20-24 cohort but with the same decline in protection seen between the last two cohorts. These assumptions allowed notification rates to be estimated for the 25-29 year old population, resulting in a complete cohort over the projected 15 years of BCG effectiveness.
+Evidence suggests that the BCG vaccine has a high efficacy for at least the first 15 years after vaccination, therefore Sutherland et al. extrapolated from the data on the 20-24 cohort to a theoretical 25-29 year old cohort. Data on the notifications in 25-29 year olds was available for the first 6 months of the 1983 survey and this was then scaled up to a yearly estimate using the ratio of notifications from this age group against the total number of notifications recorded in that year. Population estimates for the 25-29 year old cohort were based on data from the 20-24 cohort adjusted for all causes of mortality (0.34%). Migration was ignored. The tuberculin positive cohort had a sharp decline in the previous two age cohorts, therefore it was assumed that this continued. Lastly, the efficacy was estimated as being that seen in the 20-24 cohort but with the same decline in protection seen between the last two cohorts. These assumptions allowed notification rates to be estimated for the 25-29 year old population, resulting in a complete cohort over the projected 15 years of BCG effectiveness.
 
 ### Construction of forward estimates
 
 Based on these estimated notification rates Sutherland et al. then sought to quantify the ongoing risk of developing notified TB, projected forward in time, for both the vaccinated and unvaccinated populations. To construct these estimates several key assumptions, based on the results seen in the previous surveys, were made. Firstly, it was assumed that efficacy was not degrading within the ethnic White population and therefore historic estimates would continue to apply into the future. Additionally, it was assumed that the decay of 9% in notification rates, across all ethnic White populations, would continue indefinitely.
 
-These assumptions allowed the notification rates in both the BCG vaccinated and unvaccinated groups to be projected forward in time. By assuming that the schools scheme is responsible for the observed variation between vaccinated and unvaccinated rates the rate of prevented cases can then be estimated. By scaling this against a cohort of 100,000 13 year olds the number of prevented cases over a 15 year period can be projected for each cohort. By dividing the total number in a given cohort by the number of prevented cases the estimated number of vaccines required to prevent a single case in the 15 year period can then be calculated.
+These assumptions allowed the notification rates in both the BCG vaccinated and unvaccinated groups to be projected forward in time. By assuming that the schools scheme is responsible for the observed variation between vaccinated and unvaccinated rates the rate of prevented cases can then be estimated. By scaling this against a cohort of 100,000 13 year old's the number of prevented cases over a 15-year period can be projected for each cohort. By dividing the total number in a given cohort by the number of prevented cases the estimated number of vaccines required to prevent a single case in the 15-year period can then be calculated.
 
 To estimate the total number of prevented notifications, for each cohort, in England and Wales the total number receiving the BCG and the coverage of the schools scheme was required. The coverage of the BCG schools scheme was estimated from annual reports of the DHSS and was assumed to be 75% for all years. The number of BCG vaccines given each year was estimated from the DHSS returns for the years 1967 to 1981, it was then taken as 75% of the estimated ethnic White population aged 13 years from 1982-1996, for each 5 year period thereafter it was assumed to be 2.1 million. 
 
-Using this information and the projected differences between vaccinated and unvaccinated notification rates allowed the number of prevented notifications for each age group to be found for each year. This can then be combined to give the total number of prevented notifications for those aged between 15-29. To understand these estimates, estimates of the projected yearly notifications if the scheme continues were required. These totals were derived from the vaccinated and unvaccinated rates supplemented with similar projections from the tuberculin positive or otherwise ineligible sourced from the 1983 BCG survey.[@Sutherland1987a]
+Using the data on BCG coverage, the number of vaccines given each year, and the projected differences between vaccinated and unvaccinated notification rates allowed the number of prevented notifications, due to vaccination, for each age group to be found for each year. This can then be used to give the total number of prevented notifications for those aged between 15-29 years. To understand these estimates, estimates of the projected yearly notifications if the scheme continues were required. These totals were derived from the vaccinated and unvaccinated rates supplemented with similar projections from the tuberculin positive or otherwise ineligible sourced from the 1983 BCG survey.[@Sutherland1987a]
 
 **Original transmission chain model**
 
@@ -151,10 +175,10 @@ $$ Z = \frac{xz + x^{2}2z + x^{3}3z + . .}{x+x^2+x^3+ . . }= \frac{z}{1-x} $$
 
 **Updating the transmission chain model**
 
-Sutherland et al. incorrectly defined the total expected number of secondary notifications ($T$) as the initial generation size ($x$). To correct this we updated 1. to the following in our updated scenarios, 
+Sutherland et al. incorrectly defined the total expected number of secondary notifications ($T$) as the initial generation size ($x$). To correct this we revised 1. to the following in our updated model, 
 
 $$ x = (1-d)^z < 1 $$
-This update meant that we could not estimate when secondary notifications occurred. We have therefore reported secondary notifications occuring in the same year as the primary notifications that caused them. Implementing the model required several assumptions not detailed in [@Sutherland1989] these are discusssed in detail in the supplementary information.
+This update meant that we could not estimate when secondary notifications occurred. We have therefore reported secondary notifications occurring in the same year as the primary notifications that caused them. Implementing the model required several additional assumptions not detailed in [@Sutherland1989] - see the supplementary information for details.
 
 ```{r generate-sutherland-scenarios}
 ## Generate percentage annual change scenarios based on those used at JVCI - see ?gen_annual_change_scenarios for details
@@ -223,7 +247,7 @@ inc_rates_scenarios <- pomp::bake(file = file.path("results", prefix, "inc_rates
 
 ## Statistical analysis
 
-For each scenario, we ran the model until 2028 with 10,000 parameter samples. We tested the difference between scenarios using the Mann-Whitney test for the number of vaccines needed to prevent a single case in 15 years after vaccination for a cohort aged 13-14 years old at vaccination. As in [@Sutherland1989] a 15 year time horizon was used with 5 year intervals. The year closest to the year of the change in vaccination policy (2005), which had model estimates, was used as the baseline. 
+For each scenario, we ran the model until 2028 with 10,000 parameter samples. We tested the difference between scenarios using the Mann-Whitney test for the number of vaccines needed to prevent a single case in 15 years after vaccination for a cohort aged 13-14 years old at vaccination. As in [@Sutherland1989] a 15-year time horizon was used with 5 year intervals. The year closest to the year of the change in vaccination policy (2005), which had model estimates, was used as the baseline. 
 
 ```{r simulate-model}
 ## Bind all scenarios together
@@ -723,31 +747,11 @@ The code and data for the analysis contained in this paper can be found at: http
 
 <div id = 'refs'></div>
 
-# Abstract
+## Results *Copy to top*
 
-## Objectives
+The original model greatly underestimated the impact of ending school-age vaccination compared to our updated, corrected, model. The model produced predictions with wide confidence intervals when parameter uncertainty was included. Model estimates were most comparable to notification data when an annual decrease in TB incidence rates of 1.9% was used. Using this assumption, we estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(", ", ",")` vaccines would have been required to prevent a single notification in 2004.
 
-In 2005, England and Wales switched from universal BCG vaccination against tuberculosis (TB) disease for school-age children to targeted vaccination of neonates. We aimed to recreate and re-evaluate a previously published model, the results of which informed this policy change.
 
-## Design
-
-We recreated an approach for estimating the impact of ending the BCG schools scheme, correcting a methodological flaw in the model, updating the model with parameter uncertainty, and improving parameter estimates where possible. We investigated scenarios for the assumed annual decrease in TB incidence rates considered by the UK’s Joint Committee on Vaccination and Immunisation and explored alternative scenarios using notification data.
-
-## Setting 
-
-England and Wales.
-
-## Outcome measures
-
-The number of vaccines needed to prevent a single notification, and the average annual additional notifications caused by ending the policy change.
-
-## Results
-
-The original model greatly underestimated the impact of ending school-age vaccination compared to our updated, corrected, model. The model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates were most comparable to notification data when an annual decrease in TB incidence rates of 1.9% was used. Using this assumption, we estimate that `r  str_replace(vac_2004_1, "Q", "Quantiles (Q)") %>% str_replace(", ", ",")` vaccines would have been required to prevent a single notification in 2004.
-
-## Conclusions
-
-The previously published model was found to contain a methodological flaw which, once corrected, resulted in a large increase in the estimated impact of ending the BCG schools scheme. The original approach was also found to be spuriously precise once updated with parameter uncertainty. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of independent evaluations of modelling evidence, including uncertainty, and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
 
 # Supplementary Information: Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
 
