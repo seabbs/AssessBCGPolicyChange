@@ -29,12 +29,12 @@ The number of vaccines needed to prevent a single notification, and the average 
 Results
 -------
 
-The original model greatly underestimated the impact of ending school-age vaccination compared to our updated, corrected, model. The model produced predictions with wide confidence intervals when parameter uncertainty was included. Estimates were most comparable to notification data when an annual decrease in TB incidence rates of 1.9% was used. Using this assumption, we estimate that 1600 (2.5,97.5% Quantiles (Q): 1300, 2000) vaccines would have been required to prevent a single notification in 2004.
+The original model greatly underestimated the impact of ending school-age vaccination compared to our updated, corrected, model. The model produced predictions with wide confidence intervals when parameter uncertainty was included. Model estimates were most comparable to notification data when an annual decrease in TB incidence rates of 1.9% was used. Using this assumption, we estimate that 1600 (2.5,97.5% Quantiles (Q): 1300, 2000) vaccines would have been required to prevent a single notification in 2004.
 
 Conclusions
 -----------
 
-The previously published model was found to contain a methodological flaw which, once corrected, resulted in a large increase in the estimated impact of ending the BCG schools scheme. The original approach was also found to be spuriously precise once updated with parameter uncertainty. The impact of ending the BCG schools’ scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of independent evaluations of modelling evidence, including uncertainty, and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
+The previously published model was found to contain a methodological flaw which, once corrected, resulted in a large increase in the estimated impact of ending the BCG schools scheme. The original approach was also found to be spuriously precise once updated with parameter uncertainty. The impact of ending the BCG schools scheme was found to be greater than previously thought when notification data were used. Our results highlight the importance of independent evaluations of modelling evidence, including uncertainty, and evaluating multiple scenarios when forecasting the impact of changes in vaccination policy.
 
 Reproducibility
 ---------------
