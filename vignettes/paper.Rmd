@@ -154,7 +154,7 @@ $$ T=x+x^2+x^3+ . . = \frac{x}{1-x} $$
 
 $$ Z = \frac{xz + x^{2}2z + x^{3}3z + . .}{x+x^2+x^3+ . . }= \frac{z}{1-x} $$
 
-Both 2. and 3. are only valid when $x < 1$ and therefore $d > 0$. 
+Both 2. and 3. are only valid when $x < 1$. 
 
 **Updating the transmission chain model**
 
