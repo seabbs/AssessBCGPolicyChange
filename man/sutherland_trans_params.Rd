@@ -7,7 +7,7 @@
 
   sutherland_trans_params(Annual.TB.Decrease.Yearly = TB_decrease_as_matrix(sutherland_TB_decrease),
   Sym.Lag = sutherland_gen_time, Sutherland = TRUE, Repro.No = NULL,
-  Cohort.Length = 5)
+  Cohort.Length = 5, update_chains = FALSE)
 }
 \arguments{
 \item{Annual.TB.Decrease.Yearly}{Matrix of average yearly decreases in TB with each column representing an age group (15-19, 20-24, 25-29).
@@ -23,6 +23,8 @@ assumption for estimating the basic reproduction number.}
 the transmission chain parameters.}
 
 \item{Cohort.Length}{Numeric, the lengh of time spent in each cohort, defaults to 5 years as in Sutherland et al.}
+
+\item{update_chains}{Logical, defaults to \code{FALSE}. Should the transmission chain model be updated or used as found in Sutherland et al.}
 }
 \value{
 A dlist containing the expected total secondary notifications (Expected.Total.Sec.Note),
@@ -33,6 +35,9 @@ Estimate Transmission chain parameters using Sutherland et al.s Approach
 }
 \examples{
 
+# Orginal model
 sutherland_trans_params()
 
+# Updated model
+sutherland_trans_params(update_chains = TRUE)
 }

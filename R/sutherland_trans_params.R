@@ -4,33 +4,47 @@
 #' assumption for estimating the basic reproduction number.
 #' @param Repro.No If \code{Sutherland} is \code{FALSE} sets the basic reproduction number used to estimate
 #' the transmission chain parameters.
+#' @param update_chains Logical, defaults to \code{FALSE}. Should the transmission chain model be updated or used as found in Sutherland et al.
 #' @return A dlist containing the expected total secondary notifications (Expected.Total.Sec.Note),
 #' the size of the first generation (Size.First.Gen) and the average interval to all secondary cases (Avg.Int.All.Sec).
 #' @export
 #' @inheritParams sutherland_model
 #' @examples
 #'
+#'# Orginal model
 #'sutherland_trans_params()
 #'
+#'# Updated model
+#'sutherland_trans_params(update_chains = TRUE)
 sutherland_trans_params <- function(Annual.TB.Decrease.Yearly = TB_decrease_as_matrix(sutherland_TB_decrease), Sym.Lag = sutherland_gen_time,
                                     Sutherland = TRUE, Repro.No = NULL,
-                                    Cohort.Length = 5)
+                                    Cohort.Length = 5, update_chains = FALSE)
 {
 
-  ################################## Calculate parameters for secondary notifcations model
-  ################ Expected Total no. notifications
-  if (Sutherland) {
-    Expected.Total.Sec.Note <- (1 - rowMeans(Annual.TB.Decrease.Yearly))^Sym.Lag
-  }else {
-    Expected.Total.Sec.Note <- rep(Repro.No, nrow(Annual.TB.Decrease.Yearly))
-    names(Expected.Total.Sec.Note) <- rownames(Annual.TB.Decrease.Yearly)
+  if (!update_chains) {
+    ################################## Calculate parameters for secondary notifcations model
+    ################ Expected Total no. notifications
+    if (Sutherland) {
+      Expected.Total.Sec.Note <- (1 - rowMeans(Annual.TB.Decrease.Yearly))^Sym.Lag
+    }else {
+      Expected.Total.Sec.Note <- rep(Repro.No, nrow(Annual.TB.Decrease.Yearly))
+      names(Expected.Total.Sec.Note) <- rownames(Annual.TB.Decrease.Yearly)
+    }
+
+    ############### Size of first Gen
+    Size.First.Gen <- Expected.Total.Sec.Note / (Expected.Total.Sec.Note + 1)
+    names(Size.First.Gen) <- rownames(Annual.TB.Decrease.Yearly)
+    ############### average interval to all secondary notifications
+  }else{
+
+    # Define the size of the first generation ---------------------------------
+    Size.First.Gen <- (1 - rowMeans(Annual.TB.Decrease.Yearly)) ^ Sym.Lag
+
+    # Define expected total notifications -------------------------------------
+    Expected.Total.Sec.Note <- Size.First.Gen / (1 - Size.First.Gen)
+
   }
 
-
-  ############### Size of first Gen
-  Size.First.Gen <- Expected.Total.Sec.Note / (Expected.Total.Sec.Note + 1)
-  names(Size.First.Gen) <- rownames(Annual.TB.Decrease.Yearly)
-  ############### average interval to all secondary notifications
 
   Avg.Int.All.Sec <- Sym.Lag/(1 - Size.First.Gen)
   names(Avg.Int.All.Sec) <- rownames(Annual.TB.Decrease.Yearly)

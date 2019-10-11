@@ -4,7 +4,7 @@
 \alias{gen_scenario_results}
 \title{A Function to Generate Scenario Results from the Sutherland Model}
 \usage{
-gen_scenario_results(scenarios, parameter_samples, cores = 1)
+gen_scenario_results(scenarios, parameter_samples, cores = 1, ...)
 }
 \arguments{
 \item{scenarios}{A dataframe of scenarios, see the examples for a structural example.}
@@ -12,6 +12,8 @@ gen_scenario_results(scenarios, parameter_samples, cores = 1)
 \item{parameter_samples}{A dataframe of parameter samples, see the examples for an example.}
 
 \item{cores}{The number of cores to use, defaults to one}
+
+\item{...}{Additional arguments passed to \code{sutherland_model}.}
 }
 \value{
 A dataframe combining the scenarios, parameter samples, and model results

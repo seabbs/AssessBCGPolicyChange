@@ -118,7 +118,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>gen_scenario_results</span>(<span class='no'>scenarios</span>, <span class='no'>parameter_samples</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>gen_scenario_results</span>(<span class='no'>scenarios</span>, <span class='no'>parameter_samples</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +135,10 @@
       <th>cores</th>
       <td><p>The number of cores to use, defaults to one</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code>sutherland_model</code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -150,7 +154,7 @@
 <span class='no'>parameter_samples</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sample_model_parameters.html'>sample_model_parameters</a></span>(<span class='kw'>incidence_rates</span> <span class='kw'>=</span> <span class='no'>sutherland_incidence_rates</span>,
 <span class='kw'>population_data</span> <span class='kw'>=</span> <span class='no'>sutherland_data</span>, <span class='kw'>samples</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
-<span class='fu'>gen_scenario_results</span>(<span class='no'>scenarios</span>, <span class='no'>parameter_samples</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 30 x 18</span><span>
+<span class='fu'>gen_scenario_results</span>(<span class='no'>scenarios</span>, <span class='no'>parameter_samples</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 30 x 20</span><span>
 #&gt;    scenario sample annual_TB_decre… incidence_rates per_year_one sym_lag
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>                 </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> 9% decr…      1 </span><span style='color: #555555;'>&lt;dbl [55 × 3]&gt;</span><span>   </span><span style='color: #555555;'>&lt;list [5]&gt;</span><span>             0.764    1.32
@@ -163,7 +167,7 @@
 #&gt; </span><span style='color: #555555;'> 8</span><span> 9% decr…      8 </span><span style='color: #555555;'>&lt;dbl [55 × 3]&gt;</span><span>   </span><span style='color: #555555;'>&lt;list [5]&gt;</span><span>             0.764    1.42
 #&gt; </span><span style='color: #555555;'> 9</span><span> 9% decr…      9 </span><span style='color: #555555;'>&lt;dbl [55 × 3]&gt;</span><span>   </span><span style='color: #555555;'>&lt;list [5]&gt;</span><span>             0.764    1.42
 #&gt; </span><span style='color: #555555;'>10</span><span> 9% decr…     10 </span><span style='color: #555555;'>&lt;dbl [55 × 3]&gt;</span><span>   </span><span style='color: #555555;'>&lt;list [5]&gt;</span><span>             0.764    1.42
-#&gt; </span><span style='color: #555555;'># … with 20 more rows, and 12 more variables: `Table 2 - Estimated risk of
+#&gt; </span><span style='color: #555555;'># … with 20 more rows, and 14 more variables: `Table 2 - Estimated risk of
 #&gt; #   developing notified TB` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Table 3 - Estimated of no. of TB
 #&gt; #   notifications prevented` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Table 4 - Estimated no. of TB
 #&gt; #   notifications prevented by Schools BCG scheme` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Table 4 - Total
@@ -174,7 +178,8 @@
 #&gt; #   scheme` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Table 5 - Total notifications if the scheme
 #&gt; #   continues` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Table 5 - Total secondary notifications all
 #&gt; #   time` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Total additional notifications` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, `Total additional
-#&gt; #   notifications all time` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div></span></pre>
+#&gt; #   notifications all time` </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>, total_primary_additional </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span style='color: #555555;'>,
+#&gt; #   total_secondary_additional </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

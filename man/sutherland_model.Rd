@@ -9,7 +9,7 @@ sutherland_model(Data = sutherland_data,
   Cohort.Length = 5, Data.start = 1969,
   Annual.TB.Decrease.Yearly = TB_decrease_as_matrix(sutherland_TB_decrease),
   Percentage.Year.One = NULL, trans_params = sutherland_trans_params(),
-  Sym.Lag = 2)
+  Sym.Lag = 2, update_chains = FALSE)
 }
 \arguments{
 \item{Data}{Data used by Sutherland et al. analysis. See \code{\link[AssessBCGPolicyChange]{sutherland_data}}.}
@@ -35,10 +35,13 @@ the size of the first generation, and the average interval between a primary cas
 
 \item{Sym.Lag}{Numeric, the generation time between infection and symtoms. Must be smaller or equal to the \code{Cohort.Length}.
 Defaults to \code{\link[AssessBCGPolicyChange]{sutherland_gen_time}}.}
+
+\item{update_chains}{Logical, defaults to \code{FALSE}. Should the transmission chain model be updated or used as found in Sutherland et al.}
 }
 \value{
 A list of tables reproducing the results presented in Sutherland et al. The final table estimates the total number of additional
-cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length.
+cases from ending the shcheme. In order to provide a complete estimate each 5 year estimate has been multiplied by the cohort length. In addition the
+primary additional impacts and total secondary notifications arising from each year are also output based on paper revisions.
 }
 \description{
 Sutherland et al. Model to Estimate Impact of Ending the BCG School Scheme
