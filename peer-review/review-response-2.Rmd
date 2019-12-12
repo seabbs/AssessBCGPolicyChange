@@ -27,20 +27,20 @@ The manuscript has been improved and most of my comments have been addressed.
 I have only a few minor suggestions: 
 The abbreviation 'JCVI' is still spelt wrong in many parts of the manuscript, including figure legends. I suggest the authors run a thorough check. 
 
-*Thank you for highlighting this mistake - we have thoroughly checked the manuscript and correction misspellings.*
+*Thank you for highlighting this mistake - we have thoroughly checked the manuscript and corrected misspellings.*
 
 It seems to me that the two method sections - 'estimating notification rates' and 'construction of forward estimates' - are the content of Sutherland et al.'s model. If they are, marking the origin explicitly (potentially in the section titles) may help the audience to compare between the original and updated methods. Or if the original and updated methods are both involved in these two sections, please state the difference more explicitly. 
 
 
-**
+*We have marked these sections as original (to match the approach used for the transmission model.*
 
 In 'Original transmission chain model' section, I found the notations 'T' confusing, as they appear in both steps 1. and 2. but come with different definitions. Although this may be the original way how the Sutherland et al.'s model was presented, do you consider to assign different notations or add subscripts to them for clarification? 
 
-**
+*We have standardised the definitions used for T in 1. and 2. *
 
 In 'Model assumptions' of supplementary information, the notation 'T' is used but without further definition. As there are two definitions for 'T' used in the main text (as mentioned in the above point), it will be helpful to define the notation again here or make it clearly linked back to the definition in the main text. 
 
-**
+*We have added the standardised definition now used in both 1. and 2. to this section along with the definition for $x$.*
 
 ## Authors' response to Reviewer #2
 
