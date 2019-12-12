@@ -9,7 +9,7 @@ output:
 
 Dear Editor,
 
-Thank you for sending review reports for our manuscript. The reviewer’s comments were again useful and have greatly improved the paper.
+Thank you for sending review reports for our manuscript. The reviewer’s comments were again useful.
 
 We enclose a revised version of the manuscript (clean and with tracked changes), which addresses the reviewer’s comments and suggestions. The reviewer’s comments are shown below with our response to each comment in italics.
 
