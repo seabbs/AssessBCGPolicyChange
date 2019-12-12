@@ -27,7 +27,7 @@ The manuscript has been improved and most of my comments have been addressed.
 I have only a few minor suggestions: 
 The abbreviation 'JCVI' is still spelt wrong in many parts of the manuscript, including figure legends. I suggest the authors run a thorough check. 
 
-*Thank you for highlighting this mistake - we have thoroughly checked the manuscript and corrected misspellings.*
+*Thank you for highlighting this mistake and apologies that it was not dealt with correctly in the last round of responses - we have thoroughly checked the manuscript and corrected misspellings.*
 
 It seems to me that the two method sections - 'estimating notification rates' and 'construction of forward estimates' - are the content of Sutherland et al.'s model. If they are, marking the origin explicitly (potentially in the section titles) may help the audience to compare between the original and updated methods. Or if the original and updated methods are both involved in these two sections, please state the difference more explicitly. 
 
