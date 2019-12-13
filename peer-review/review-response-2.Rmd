@@ -47,28 +47,27 @@ OVERALL
 
 I appreciate the effort made by the authors to improve the clarity and respond to my comments. I find the article is now much easier to follow, and should be published after a few minor revisions. 
 
-*Thank you for reviewing the updated manuscript and for your suggested revisions. We agree that the last set of revisions substantially improved the manuscript. *
+*Thank you for reviewing the updated manuscript and for your suggested revisions. We agree that the last set of revisions substantially improved the manuscript.*
 
 SPECIFIC 
 
 - Abstract. I find the Conclusions a bit long and containing Results. I would suggest moving the first two sentences of the current Conclusions up into Results to have a punchier summary & implication in the Conclusions. Also: can you be more specific about the meaning of 'most comparable to notification data'? 
 
-*As suggested we have moved the first two sentences of the conclusions into the results section, editing them to avoid repetition. We have reworded 'most comparable to notification data' to make it clear that model estimates based on an assumed decrease in TB are being compared to model estimates derived using notification data.  *
+*As suggested we have moved the first two sentences of the conclusions into the results section, editing them to avoid repetition. We have reworded 'most comparable to notification data' to make it clear that model estimates based on an assumed decrease in TB are being compared to model estimates derived using notification data.*
 
 - Strengths & limitations bullets. 'our results are conservative' - I don't find it obvious what this means. Which results, and which direction does 'conservative' mean in this case? (Eg result could be referring to the NNV, although I wouldn't be certain which direction conservative would then mean; could be cases caused by change, in which case conservative means this could be larger; or could be talking about the increase in uncertainty.) 
 
-*We have reworded this sentence (and the corresponding sentence in the discussion) to indicate that we think that excluding these factors may mean our results are underestimates.*
+*We have reworded this sentence (and the corresponding sentence in the discussion) to indicate that we think that excluding these factors may mean our results underestimate the impact of ending the BCG schools scheme.*
 
 - Model description in text. This is now much clearer. There are a few minor suggestions for the section on Updating the transmission chain model. 
 
 In this section, 'secondary cases' refers (in introducing z) to those directly resulting in the next generation. In bullet 3 introducing Z, all secondary cases are considered. Suggest using more specific phraseology, eg '(secondary) cases in the next generation' where it applies. 
 
-*Apologies for the confusion. We have used the more specifc phraseology that you suggested.*
-
+*We have updated the text to use the more specifc phraseology suggested.*
 
 Related to this perhaps, I didn't understand the bit about not being able to 'estimate when secondary notifications occurred' when you have just defined them as z years later, or if they are not the next generation cases you have a distribution implied by bullet point defining Z. If this isn't important and keeping them in the same year as root cases just facilitates book-keeping, then this should come across. 
 
-*This statement was intended to indicate that our approach could not allocate cases annually (only by generation). This step was neccessary in order to completely reproduce the previously published results but does not impact estimates of the overall impact of ending the scheme. We have clarified this both in the methods section and in the SI.*
+*This statement was intended to indicate that our approach could not allocate cases annually (only by generation or overall). This step was neccessary in order to completely reproduce the previously published results but does not impact estimates of the overall impact of ending the scheme. We have clarified this both in the methods section and in the SI.*
 
 Also around here, referring to x as the 'initial generation size' leaves room for confusion on two fronts: a) initial = zeroth or first. It seems you mean first, but could be understood the other way. b) it is a relative size (to the zeroth generation). 
 
@@ -76,7 +75,7 @@ Also around here, referring to x as the 'initial generation size' leaves room fo
 
 - Model description in SI. While much clearer in the article, I'm still a bit confused by the equations in the start of the SI. Could these be explained? I don't really understand what the first equation is meant to mean: eg what does 'current' mean (is it the notifications in a year with data, to be matched to data?)? How do you distinguish notifications as primary vs secondary (and if defined by model dynamics, how is the initial split determined)? Why are x and f making an appearance? For the second equation, why is a fraction (1-fx) of the current propagated and why is this multiplied by this decline factor? In the first instance, x already captures information about decline. In the second instance, the power L-Z is mysterious to me (I was expecting a power like L/z to count generations, with little z rather than Z). 
 
-*We agree that this could have been better explained. Hopefully, our changes from your above points add some clarity about what is being modelled. The aim of this step is to allocate secondary notifications to either the current year being considered or the subsequent modelled time step. This was found to be neccessary in order to reproduce Sutherland et al.'s final results table but does not impact the overall model results and so is only used for model validation purposes (as is hopefully now clear from the paper).*
+*We agree that this could have been better explained. Hopefully, our changes from your above points add some clarity about what is being modelled. The aim of this step is to allocate secondary notifications to either the current year being considered or the subsequent modelled time step (5 years in the future). This was found to be neccessary in order to reproduce Sutherland et al.'s final results table but does not impact the overall model results and so is only used for model validation purposes (as is hopefully now clear from the paper). We updated the description of these equations in the SI in order to provide more context.*
 
 
 MINUTIAE 
