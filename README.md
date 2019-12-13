@@ -1,6 +1,6 @@
 
-Reassessing the Evidence for Universal School-age Bacillus Calmette Guerin (BCG) Vaccination in England and Wales
-=================================================================================================================
+Reassessing the evidence for universal school-age Bacillus Calmette Guerin (BCG) vaccination in England and Wales: re-evaluating and updating a modelling study
+===============================================================================================================================================================
 
 [![badge](https://img.shields.io/badge/Launch-Analysis-lightblue.svg)](https://mybinder.org/v2/gh/seabbs/AssessBCGPolicyChange/master?urlpath=rstudio) [![Documentation](https://img.shields.io/badge/Documentation-click%20here!-lightgrey.svg?style=flat)](https://www.samabbott.co.uk/AssessBCGPolicyChange) [![Paper](https://img.shields.io/badge/Paper-10.1101/624916-lightgreen.svg)](https://doi.org/10.1101/624916) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2635687.svg)](https://doi.org/10.5281/zenodo.2635687)
 
