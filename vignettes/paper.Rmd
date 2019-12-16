@@ -446,6 +446,7 @@ per_annual_change_yr_avg %>%
 
 ```{r, inlcude = FALSE}
 ggplot2::ggsave(paste0(results_path, "/fig-1.tiff"))
+ggplot2::ggsave(paste0(results_path, "/fig-1.png"))
 ```
 
 ## Vaccines required to prevent a single notification
@@ -592,6 +593,7 @@ vaccines_to_prevent %>%
 
 ```{r, inlcude = FALSE}
 ggplot2::ggsave(paste0(results_path, "/fig-2.tiff"))
+ggplot2::ggsave(paste0(results_path, "/fig-2.png"))
 ```
 
 
@@ -708,8 +710,11 @@ avg_annual_not_prev %>%
 
 
 ```{r, inlcude = FALSE}
-ggplot2::ggsave("results/papar/fig-3.tiff")
+ggplot2::ggsave(paste0(results_path, "/fig-3.tiff"))
+ggplot2::ggsave(paste0(results_path, "/fig-3.png"))
 ```
+
+
 
 # Discussion
 
